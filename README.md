@@ -3,7 +3,7 @@
 An experiential project built with:
 
 - **Backend:** Ruby on Rails 7.1.5.2 (API only)
-- **Frontend:** React 18 + Vite + TailwindCSS
+- **Frontend:** React 19 + Vite 7.1.7 + TailwindCSS 3.4
 - **Database:** MySQL
 - **WebSockets:** ActionCable
 
