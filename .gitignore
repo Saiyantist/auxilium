@@ -1,7 +1,3 @@
-# Ignore environment
-.env
-.env.local
-.env.*.local
 
 /frontend/.env
 /backend/.env
