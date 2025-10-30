@@ -1,7 +1,8 @@
+// src/routes/AppRouter.tsx
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import AppLayout from "../layouts/AppLayout";
-import Home from "../pages/Home";
-import About from "../pages/About"
+import AppLayout from "@/layouts/AppLayout";
+import Home from "@/pages/Home";
+import About from "@/pages/About";
 
 const router = createBrowserRouter([
   {
@@ -20,6 +21,14 @@ const router = createBrowserRouter([
       </AppLayout>
     ),
   },
+  // {
+  //   path: "*",
+  //   element: (
+  //     <AppLayout>
+  //       <NotFound />
+  //     </AppLayout>
+  //   ),
+  // },
 ]);
 
 export default function AppRouter() {

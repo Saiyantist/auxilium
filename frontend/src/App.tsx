@@ -1,48 +1,20 @@
-import React, { useEffect, useState } from "react";
-import reactLogo from "../assets/react.svg";
-import viteLogo from "/vite.svg";
-import API from "../services/api";
+// import { useState } from 'react'
+// import reactLogo from './assets/react.svg'
+// import viteLogo from '/vite.svg'
+import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Button } from "@/components/ui/button";
 
-export default function Home() {
-  const [status, setStatus] = useState("Loading...");
-
-  useEffect(() => {
-    API.get("/healthz")
-      .then(() => setStatus("✅ Connected ✅"))
-      .catch(() => setStatus("❌ Unreachable ❌"));
-  }, []);
+function App() {
+  // const [count, setCount] = useState(0)
 
   return (
-    <div className="flex flex-col items-center justify-center gap-6">
-      {/* Logos */}
-      <div className="flex justify-center">
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-
-      {/* Hero */}
-      <div className="space-y-5">
-        <h1 className="text-center font-semibold">Auxilium</h1>
-        <h2 className="text-center text-2xl">A HelpDesk and Ticketing System using</h2>
-        <h3 className="text-center text-xl">Vite + React-TS + shadcn/ui + RAILS</h3>
-      </div>
-
-      <div className="space-y-5">
-        <Card className="p-6 space-y-4">
-          {/* API Connection test */}
-          <p className="text-center">API Connection Status:</p>
-          <h3 className="text-center text-xl italic">{status}</h3>
-          <div className="flex justify-center space-x-5">
-            <Button variant="outline">Get started</Button>
-            <Button variant="outline">Button</Button>
-          </div>
+    <>
+      <div className="">
+        <Card className="p-6">
+          <h1 className="text-2xl font-bold mb-4">Vite + shadcn/ui</h1>
+          <Button variant="outline">Get started</Button>
+          <Button variant="outline">Button</Button>
         </Card>
         <Card className="px-6">
           <Accordion type="single" collapsible className="w-full" defaultValue="item-1">
@@ -50,8 +22,8 @@ export default function Home() {
               <AccordionTrigger>Product Information</AccordionTrigger>
               <AccordionContent className="flex flex-col gap-4 text-balance">
                 <p>
-                  Our flagship product combines cutting-edge technology with sleek design. Built with premium
-                  materials, it offers unparalleled performance and reliability.
+                  Our flagship product combines cutting-edge technology with sleek design. Built with premium materials,
+                  it offers unparalleled performance and reliability.
                 </p>
                 <p>
                   Key features include advanced processing capabilities, and an intuitive user interface designed for
@@ -76,8 +48,8 @@ export default function Home() {
               <AccordionTrigger>Return Policy</AccordionTrigger>
               <AccordionContent className="flex flex-col gap-4 text-balance">
                 <p>
-                  We stand behind our products with a comprehensive 30-day return policy. If you&apos;re not
-                  completely satisfied, simply return the item in its original condition.
+                  We stand behind our products with a comprehensive 30-day return policy. If you&apos;re not completely
+                  satisfied, simply return the item in its original condition.
                 </p>
                 <p>
                   Our hassle-free return process includes free return shipping and full refunds processed within 48
@@ -88,6 +60,8 @@ export default function Home() {
           </Accordion>
         </Card>
       </div>
-    </div>
+    </>
   );
 }
+
+export default App;
