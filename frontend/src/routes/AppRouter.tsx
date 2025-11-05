@@ -6,20 +6,17 @@ import About from "@/pages/About";
 
 const router = createBrowserRouter([
   {
-    path: "/",
-    element: (
-      <AppLayout>
-        <Home />
-      </AppLayout>
-    ),
-  },
-  {
-    path: "/about",
-    element: (
-      <AppLayout>
-        <About />
-      </AppLayout>
-    ),
+    element: <AppLayout />,
+    children: [
+      {
+        path: "/",
+        element: <Home />,
+      },
+      {
+        path: "/about",
+        element: <About />,
+      },
+    ],
   },
   // {
   //   path: "*",
