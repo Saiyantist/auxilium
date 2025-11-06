@@ -3,6 +3,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import AppLayout from "@/layouts/AppLayout";
 import Home from "@/pages/Home";
 import About from "@/pages/About";
+import Landing from "@/pages/Landing";
 
 const router = createBrowserRouter([
   {
@@ -15,6 +16,10 @@ const router = createBrowserRouter([
       {
         path: "/about",
         element: <About />,
+      },
+      {
+        path: "/landing_test",
+        element: <Landing />,
       },
     ],
   },
