@@ -6,7 +6,6 @@ export default function AppLayout() {
   return (
     <div className="min-h-screen container mx-auto">
       <Header />
-
       <main className="p-6">
         <Outlet />
       </main>

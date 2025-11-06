@@ -40,5 +40,10 @@ module Backend
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
+
+    # Prevent ActionDispatch::Flash middleware (Devise sometimes calls flash messages)
+    # config.middleware.delete ActionDispatch::Flash rescue nil
+    # config.middleware.delete ActionDispatch::Cookies rescue nil
+    # config.middleware.delete ActionDispatch::Session::CookieStore rescue nil
   end
 end
