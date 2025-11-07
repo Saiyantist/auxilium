@@ -1,6 +1,14 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { logout } from "@/services/auth";
 
 export default function Header() {
+  const token = localStorage.getItem("token");
+  const handleLogout = async () => {
+    await logout();
+    window.location.href = "/";
+  };
+
   return (
     <header
       aria-label="Main navigation"
@@ -50,6 +58,30 @@ export default function Header() {
                 Contact
               </NavLink>
             </li>
+            {token ? (
+              <Button variant="outline" size="sm" onClick={handleLogout}>
+                Logout
+              </Button>
+            ) : (
+              <>
+                <li>
+                  <NavLink to="/login" 
+                  className={({ isActive }) =>
+                    `${isActive ? "font-bold border-b border-white px-2" : ""}`
+                  }>
+                    Login
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/register"
+                  className={({ isActive }) =>
+                    `${isActive ? "font-bold border-b border-white px-2" : ""}`
+                  }>
+                    Register
+                  </NavLink>
+              </li>
+              </>
+            )}
           </ul>
         </nav>
       </div>
