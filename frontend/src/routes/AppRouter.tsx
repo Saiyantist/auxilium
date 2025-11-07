@@ -3,6 +3,9 @@ import { Route, Routes } from "react-router-dom";
 /** Layouts */
 import AppLayout from "@/layouts/AppLayout";
 import AuthLayout from "@/layouts/AuthLayout";
+import DashboardLayout from "@/layouts/DashboardLayout";
+
+/** Routing functions */
 import ProtectedRoute from "./ProtectedRoute";
 import PublicRoute from "./PublicRoute";
 
@@ -37,7 +40,7 @@ export default function router() {
 
       {/* Protected Routes */}
       <Route element={<ProtectedRoute />}>
-        <Route element={<AppLayout />}>
+        <Route element={<DashboardLayout />}>
           <Route path="/dashboard" element={<Dashboard />} />
         </Route>
       </Route>
