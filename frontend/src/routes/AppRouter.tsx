@@ -1,11 +1,20 @@
-// src/routes/AppRouter.tsx
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import AppLayout from "@/layouts/AppLayout";
 import Home from "@/pages/Home";
 import About from "@/pages/About";
-import Landing from "@/pages/Landing";
+import Services from "@/pages/Services";
+import Contact from "@/pages/Contact";
 
 const router = createBrowserRouter([
+  // {
+  //   element: <DashboardLayout />,
+  //   children: [
+  //     {
+  //       path: "/dashboard",
+  //       element: <Dashboard />,
+  //     },
+  //   ],
+  // },
   {
     element: <AppLayout />,
     children: [
@@ -18,19 +27,15 @@ const router = createBrowserRouter([
         element: <About />,
       },
       {
-        path: "/landing_test",
-        element: <Landing />,
+        path: "/services",
+        element: <Services />,
+      },
+      {
+        path: "/contact",
+        element: <Contact />,
       },
     ],
   },
-  // {
-  //   path: "*",
-  //   element: (
-  //     <AppLayout>
-  //       <NotFound />
-  //     </AppLayout>
-  //   ),
-  // },
 ]);
 
 export default function AppRouter() {

@@ -1,13 +1,13 @@
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import React, { useEffect, useState } from "react";
 import reactLogo from "../assets/react.svg";
 import viteLogo from "/vite.svg";
 import API from "../services/api";
-import { Card } from "@/components/ui/card";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 
-export default function Home() {
+
+export default function Services() {
   const [status, setStatus] = useState("Loading...");
 
   useEffect(() => {
@@ -41,7 +41,8 @@ export default function Home() {
           <p className="text-center">API Connection Status:</p>
           <h3 className="text-center text-xl italic">{status}</h3>
           <div className="flex justify-center space-x-5">
-            <Button asChild variant="outline"><Link to = "/">Get started</Link></Button>
+            <Button asChild variant="outline"><Link to = "/about">Get started</Link></Button>
+            <Button variant="outline">Button</Button>
           </div>
         </Card>
       </div>

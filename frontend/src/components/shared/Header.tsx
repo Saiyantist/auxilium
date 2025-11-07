@@ -1,22 +1,58 @@
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 export default function Header() {
   return (
-  <header className="w-full fixed top-0 left-0 z-50 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white drop-shadow-xl px-6 py-7">
-    <h2 className="text-xl font-semibold">Auxilium Helpdesk</h2>
-    <ul>
-      <li>
-        <NavLink to="/" className="mr-4">
-          Home
-        </NavLink>
-        <NavLink to="/about" className="mr-4">
-          About
-        </NavLink>
-        <NavLink to="/landing_test" className="mr-4">
-          Landing
-        </NavLink>
-      </li>
-    </ul>
-  </header>
-  )
+    <header
+      aria-label="Main navigation"
+      className="w-full fixed top-0 left-0 z-50 bg-purple-500 text-white drop-shadow-xl px-6 py-4"
+    >
+      <div className="flex justify-between items-center">
+        <h2 className="text-xl font-semibold">Auxilium Helpdesk</h2>
+        <nav>
+          <ul className="flex space-x-6">
+            <li>
+              <NavLink
+                to="/"
+                className={({ isActive }) =>
+                  `${isActive ? "font-bold border-b border-white px-2" : ""}`
+                }
+              >
+                Home
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/about"
+                className={({ isActive }) =>
+                  `${isActive ? "font-bold border-b border-white px-2" : ""}`
+                }
+              >
+                About
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/services"
+                className={({ isActive }) =>
+                  `${isActive ? "font-bold border-b border-white px-2" : ""}`
+                }
+              >
+                Services
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/contact"
+                className={({ isActive }) =>
+                  `${isActive ? "font-bold border-b border-white px-2" : ""}`
+                }
+              >
+                Contact
+              </NavLink>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+  );
 }
