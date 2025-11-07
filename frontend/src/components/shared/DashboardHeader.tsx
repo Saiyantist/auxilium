@@ -19,7 +19,6 @@ export default function DashboardHeader() {
           <SidebarTrigger className="text-white hover:bg-purple-600" />
           <h2 className="text-xl font-semibold">Auxilium Helpdesk</h2>
         </div>
-
         <div>
           <Button variant="outline" size="sm" onClick={handleLogout} className="text-primary">
             Logout

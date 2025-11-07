@@ -4,11 +4,11 @@ import Footer from "@/components/shared/Footer";
 
 export default function AppLayout() {
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen w-full">
       {/* Fixed Header */}
       <Header />
       {/* Main Content — fills the space between header & footer */}
-      <main className="flex-1 pt-[200px] pb-[80px] px-6 overflow-auto">
+      <main className="flex-1 pt-[30px] pb-[40px] overflow-auto">
         <Outlet />
       </main>
 
