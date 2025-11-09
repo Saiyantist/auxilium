@@ -1,4 +1,3 @@
-import React from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
@@ -6,7 +5,7 @@ import { Ticket, Users, Settings, TrendingUp } from "lucide-react";
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-400 via-pink-400 to-pink-300">
+    <div className=" bg-gradient-to-br from-purple-500 via-pink-300 to-indigo-500">
       
       {/* Hero Section */}
       <div className="container mx-auto px-6 py-20">
@@ -58,10 +57,10 @@ export default function Home() {
             Why Choose Auxilium?
           </h2>
           
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-3 gap-16">
             {/* Feature 1 */}
-            <Card className="p-8 hover:shadow-xl transition-shadow border-t-4 border-purple-500">
-              <div className="bg-purple-100 rounded-full w-16 h-16 flex items-center justify-center mb-4">
+            <Card className="p-8 text-center hover:shadow-xl transition-shadow border-t-4 border-purple-500">
+              <div className="bg-purple-100 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4">
                 <Ticket className="w-8 h-8 text-purple-600" />
               </div>
               <h3 className="text-2xl font-semibold mb-3 text-gray-800">Smart Ticketing</h3>
@@ -71,8 +70,8 @@ export default function Home() {
             </Card>
 
             {/* Feature 2 */}
-            <Card className="p-8 hover:shadow-xl transition-shadow border-t-4 border-pink-500">
-              <div className="bg-pink-100 rounded-full w-16 h-16 flex items-center justify-center mb-4">
+            <Card className="p-8 text-center hover:shadow-xl transition-shadow border-t-4 border-pink-500">
+              <div className="bg-pink-100 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4">
                 <Users className="w-8 h-8 text-pink-600" />
               </div>
               <h3 className="text-2xl font-semibold mb-3 text-gray-800">Team Collaboration</h3>
@@ -82,8 +81,8 @@ export default function Home() {
             </Card>
 
             {/* Feature 3 */}
-            <Card className="p-8 hover:shadow-xl transition-shadow border-t-4 border-purple-500">
-              <div className="bg-purple-100 rounded-full w-16 h-16 flex items-center justify-center mb-4">
+            <Card className="p-8 text-center hover:shadow-xl transition-shadow border-t-4 border-purple-500">
+              <div className="bg-purple-100 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4">
                 <Settings className="w-8 h-8 text-purple-600" />
               </div>
               <h3 className="text-2xl font-semibold mb-3 text-gray-800">Customizable</h3>
@@ -111,7 +110,7 @@ export default function Home() {
       </div>
 
       {/* Tech Stack Footer */}
-      <div className="bg-gray-900 py-12">
+      {/* <div className="bg-gray-900 py-12">
         <div className="container mx-auto px-6 text-center">
           <p className="text-gray-400 mb-4">Built with modern technologies</p>
           <div className="flex justify-center items-center gap-8 text-gray-500">
@@ -124,7 +123,7 @@ export default function Home() {
             <span className="text-lg">Rails API</span>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }

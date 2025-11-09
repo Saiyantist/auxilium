@@ -1,10 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import reactLogo from "../assets/react.svg";
 import viteLogo from "/vite.svg";
 import API from "../services/api";
 import { Link } from "react-router-dom";
+import { ScrollArea } from "@/components/ui/scroll-area"
 
 
 export default function Services() {
@@ -34,6 +35,16 @@ export default function Services() {
         <h2 className="text-center text-2xl">A HelpDesk and Ticketing System using</h2>
         <h3 className="text-center text-xl">Vite + React-TS + shadcn/ui + RAILS</h3>
       </div>
+
+      {/* Testing shadcn scroll area */}
+      <ScrollArea className="h-[200px] w-[350px] rounded-md border p-4">
+        Jokester began sneaking into the castle in the middle of the night and leaving
+        jokes all over the place: under the king's pillow, in his soup, even in the
+        royal toilet. The king was furious, but he couldn't seem to stop Jokester. And
+        then, one day, the people of the kingdom discovered that the jokes left by
+        Jokester were so funny that they couldn't help but laugh. And once they
+        started laughing, they couldn't stop.
+      </ScrollArea>
 
       <div className="space-y-5">
         <Card className="p-6 space-y-4">

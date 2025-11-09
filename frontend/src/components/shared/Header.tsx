@@ -12,7 +12,7 @@ export default function Header() {
   return (
     <header
       aria-label="Main navigation"
-      className="w-full fixed top-0 left-0 z-50 bg-purple-500 text-white drop-shadow-xl px-6 py-4"
+      className="w-full fixed top-0 left-0 z-50 bg-gradient-to-r from-purple-400 to-purple-600 text-white drop-shadow-xl px-6 py-4"
     >
       <div className="flex justify-between items-center">
         <h2 className="text-xl font-semibold">Auxilium Helpdesk</h2>
