@@ -7,7 +7,7 @@ class CreateTickets < ActiveRecord::Migration[7.1]
       t.integer :status, null: false, default: 0
       t.integer :priority, null: false, default: 1
       t.integer :severity, null: false, default: 0
-      t.integer :type, null: false, default: 0
+      t.integer :ticket_type, null: false, default: 0
       t.references :category, foreign_key: true
       t.references :project, foreign_key: true
       t.bigint :creator_id, null: false

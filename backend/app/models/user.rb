@@ -9,6 +9,16 @@ class User < ApplicationRecord
          :jwt_authenticatable,
          jwt_revocation_strategy: JwtDenylist
 
+           
+  #  Associations/Relations
+  has_many :tickets, foreign_key: :creator_id, dependent: :nullify
+  has_many :assigned_tickets, class_name: "Ticket", foreign_key: :assignee_id, dependent: :nullify
+  has_many :comments, dependent: :nullify
+  has_many :activities, dependent: :nullify
+  has_many :notifications, dependent: :destroy
+  has_many :project_memberships, dependent: :destroy
+  has_many :projects, through: :project_memberships
+  
   # Disable session storage for API requests
   Devise.skip_session_storage = [:http_auth, :params_auth]
 

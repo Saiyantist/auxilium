@@ -15,7 +15,7 @@ export default function AppLayout() {
         </main>
 
         {/* Fixed Footer */}
-          <Footer />
+        <Footer />
       </div>
     </ScrollArea>
   );
