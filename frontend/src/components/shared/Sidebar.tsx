@@ -1,4 +1,4 @@
-import { Home } from "lucide-react";
+import { Home, PlusCircle, Ticket } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -22,19 +22,47 @@ export default function AppSidebar() {
           <h2 className="text-lg font-semibold">Auxilium</h2>
         </div>
       </SidebarHeader>
+
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel>Navigation</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
+              {/* Dashboard */}
               <SidebarMenuItem>
                 <SidebarMenuButton
                   asChild
                   isActive={location.pathname === "/dashboard"}
                 >
                   <NavLink to="/dashboard">
-                    <Home />
+                    <Home className="w-5 h-5" />
                     <span>Dashboard</span>
+                  </NavLink>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+
+              {/* New Ticket */}
+              <SidebarMenuItem>
+                <SidebarMenuButton
+                  asChild
+                  isActive={location.pathname === "/new-ticket"}
+                >
+                  <NavLink to="/new-ticket">
+                    <PlusCircle className="w-5 h-5" />
+                    <span>New Ticket</span>
+                  </NavLink>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+
+              {/* My Ticket */}
+              <SidebarMenuItem>
+                <SidebarMenuButton
+                  asChild
+                  isActive={location.pathname === "/my-ticket"}
+                >
+                  <NavLink to="/my-ticket">
+                    <Ticket className="w-5 h-5" />
+                    <span>My Ticket</span>
                   </NavLink>
                 </SidebarMenuButton>
               </SidebarMenuItem>

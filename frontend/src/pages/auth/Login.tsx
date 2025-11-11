@@ -1,10 +1,18 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom"; // navigator (redirects)
+import { useNavigate, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-
-/** API Authentication */
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+  CardFooter,
+} from "@/components/ui/card";
+// import { Facebook, Chrome, Twitter } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
+import { ChevronLeft } from "lucide-react";
 
 export default function Login() {
   const { login } = useAuth();
@@ -21,53 +29,101 @@ export default function Login() {
 
     try {
       await login(email, password);
-      console.log("Logged in:", localStorage.getItem("user"));
       navigate("/dashboard");
     } catch (err: any) {
       console.error(err);
-      // Extract error messages from the error object
-      if (err.errors && Array.isArray(err.errors) && err.errors.length > 0) {
-        setError(err.errors[0]); // Show first error for login
-      } else if (
-        err.response?.data?.errors &&
-        Array.isArray(err.response.data.errors) &&
-        err.response.data.errors.length > 0
-      ) {
-        setError(err.response.data.errors[0]);
-      } else if (err.response?.status === 401) {
-        setError("Invalid email or password");
-      } else if (err.message) {
-        setError(err.message);
-      } else {
-        setError("Invalid credentials. Please try again.");
-      }
+      setError("Invalid email or password");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <form onSubmit={handleLogin} className="space-y-4">
-      <h2 className="text-xl font-semibold mb-4">Login</h2>
-      {error && <p className="bg-red-50 border border-red-200 rounded-md p-3 text-red-500 text-sm">{error}</p>
-      }
-      <Input
-        type="email"
-        placeholder="Enter your email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        required
-      />
-      <Input
-        type="password"
-        placeholder="Enter your password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        required
-      />
-      <Button type="submit" className="w-full" disabled={loading}>
-        {loading ? "Signing In..." : "Sign In"}
-      </Button>
-    </form>
+    <div className="h-full">
+      <Card className="h-full w-full p-5 shadow-2xl flex flex-col overflow-hidden">
+        <CardHeader className="p-2">
+          <div className="absolute cursor-pointer rounded-full hover:bg-accent p-1">
+            <Link to="/">
+              <ChevronLeft size={32}/>
+            </Link>
+          </div>
+          <CardTitle>
+            <h2 className="text-3xl font-bold text-center mb-2 text-gray-800">
+              Login
+            </h2>
+          </CardTitle>
+          <CardDescription className="text-center">
+            Enter your email and password to login.
+          </CardDescription>
+        </CardHeader>
+
+        <CardContent className="p-2 flex-1">
+          <form onSubmit={handleLogin} className="space-y-6">
+
+            <Input
+              type="email"
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              />
+            <Input
+              type="password"
+              placeholder="Enter your password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              />
+
+            {/* <div className="text-right">
+              <Link
+              to="/forgot-password"
+                className="text-sm text-purple-600 hover:underline"
+              >
+                Forgot password?
+              </Link>
+            </div> */}
+            <Button
+              type="submit"
+              className="w-full bg-gradient-to-r from-blue-500 to-purple-500 text-white font-semibold rounded-full hover:opacity-90 transition"
+              disabled={loading}
+              >
+              {loading ? "Signing In..." : "LOGIN"}
+            </Button>
+            
+            {error && (
+              <p className="bg-red-50 border border-red-200 rounded-md p-2 text-red-500 text-sm mb-4 text-center">
+                {error}
+              </p>
+            )}
+          </form>
+        </CardContent>
+
+        <CardFooter className="p-2 flex-col gap-2">
+          {/* <div className="text-center my-4 text-gray-600">Or Sign in using</div>
+          <div className="flex justify-center gap-4">
+            <Button variant="outline" className="rounded-full p-2">
+              <Facebook className="w-5 h-5 text-blue-600" />
+            </Button>
+            <Button variant="outline" className="rounded-full p-2">
+              <Twitter className="w-5 h-5 text-sky-400" />
+            </Button>
+            <Button variant="outline" className="rounded-full p-2">
+              <Chrome className="w-5 h-5 text-red-600" />
+            </Button>
+          </div> */}
+
+          <p className="text-center text-sm text-gray-600">
+            Don’t have an account?{" "}
+            <Link
+              to="/register"
+              className="text-purple-600 hover:underline font-medium"
+            >
+              Sign up
+            </Link>
+          </p>
+        </CardFooter>
+      </Card>
+    </div>
   );
 }
