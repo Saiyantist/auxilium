@@ -3,6 +3,7 @@ import { Outlet } from "react-router-dom";
 import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
 import Sidebar from "@/components/shared/Sidebar";
 import DashboardHeader from "@/components/shared/DashboardHeader";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 export default function DashboardLayout() {
   return (
@@ -10,9 +11,11 @@ export default function DashboardLayout() {
       <Sidebar />
       <SidebarInset>
         <DashboardHeader />
-        <main className="flex-1 pt-[200px] pb-[80px] px-6 overflow-auto">
+        <ScrollArea className="h-screen">
+        <main className="flex-1 pt-[100px] pb-[80px] px-6 overflow-auto">
           <Outlet />
         </main>
+        </ScrollArea>
       </SidebarInset>
     </SidebarProvider>
   );
