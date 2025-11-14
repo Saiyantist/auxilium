@@ -15,13 +15,26 @@ import PublicRoute from "./PublicRoute";
 import Home from "@/pages/Home";
 import About from "@/pages/About";
 
+// Authentication Pages
 import Login from "@/pages/auth/Login";
 import Register from "@/pages/auth/Register";
+
+// User Dashboard Pages
 import Dashboard from "@/pages/user/Dashboard";
 import Services from "@/pages/Services";
 import Contact from "@/pages/Contact";
 import MyTicket from "@/pages/user/MyTicket";
 import NewTicket from "@/pages/user/NewTicket";
+
+
+//Admin Dashboard Pages
+import Database from "@/pages/admin/Database";
+import Approval from "@/pages/admin/Approval";
+import Performance from "@/pages/admin/Performance";
+import Settings from "@/pages/admin/Settings";
+import UserHistory from "@/pages/admin/UserHistory";
+import AdminDashboard from "@/pages/admin/AdminDashboard";
+import AdminDashboardLayout from "@/layouts/AdminDashboardLayout";
 
 export default function router() {
   return (
@@ -49,6 +62,17 @@ export default function router() {
           <Route path="/my-ticket" element={<MyTicket />} />
           <Route path="/new-ticket" element={<NewTicket />} />
         </Route>
+      </Route>
+
+      <Route element={<ProtectedRoute />}>
+        <Route element={<AdminDashboardLayout />}>
+          <Route path="/adminDashboard" element={<AdminDashboard />} />
+          <Route path="/database" element={<Database />} />
+          <Route path="/approval" element={<Approval />} />
+          <Route path="/performance" element={<Performance />} />
+          <Route path="/settings" element={<Settings />} />
+          <Route path="/user-history" element={<UserHistory />} />
+        </Route>  
       </Route>
     </Routes>
   );
