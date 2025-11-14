@@ -1,4 +1,3 @@
-// NewTicket.tsx (src/pages/user/NewTicket.tsx)
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -20,14 +19,14 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Calendar } from "lucide-react";
-import { useTickets } from "@/components/shared/TicketContext";
+import { useTickets } from "@/contexts/TicketContext";
 
 export default function NewTicket() {
   const navigate = useNavigate();
   const { addTicket } = useTickets();
-  
+
   const [formData, setFormData] = useState({
-    date: new Date().toISOString().split('T')[0],
+    date: new Date().toISOString().split("T")[0],
     name: "",
     department: "",
     subject: "",
@@ -38,18 +37,18 @@ export default function NewTicket() {
   });
 
   const handleInputChange = (field: keyof typeof formData, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
+    setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
+
     // Add ticket to shared state
     addTicket(formData);
-    
+
     // Show success message
     alert("Ticket created successfully!");
-    
+
     // Navigate to My Tickets page
     navigate("/my-ticket");
   };
@@ -64,7 +63,7 @@ export default function NewTicket() {
               Fill out the form below to submit a new support ticket
             </CardDescription>
           </CardHeader>
-          
+
           <CardContent className="p-6">
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Row 1: Ticket No and Date */}
@@ -78,7 +77,7 @@ export default function NewTicket() {
                     disabled
                   />
                 </div>
-                
+
                 <div className="space-y-2">
                   <Label htmlFor="date">Date</Label>
                   <div className="relative">
@@ -86,7 +85,9 @@ export default function NewTicket() {
                       id="date"
                       type="date"
                       value={formData.date}
-                      onChange={(e) => handleInputChange("date", e.target.value)}
+                      onChange={(e) =>
+                        handleInputChange("date", e.target.value)
+                      }
                       className="bg-white"
                     />
                     <Calendar className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
@@ -106,12 +107,14 @@ export default function NewTicket() {
                     required
                   />
                 </div>
-                
+
                 <div className="space-y-2">
                   <Label htmlFor="department">Department *</Label>
                   <Select
                     value={formData.department}
-                    onValueChange={(value) => handleInputChange("department", value)}
+                    onValueChange={(value) =>
+                      handleInputChange("department", value)
+                    }
                   >
                     <SelectTrigger id="department">
                       <SelectValue placeholder="Select department" />
@@ -146,7 +149,9 @@ export default function NewTicket() {
                   <Label htmlFor="category">Category *</Label>
                   <Select
                     value={formData.category}
-                    onValueChange={(value) => handleInputChange("category", value)}
+                    onValueChange={(value) =>
+                      handleInputChange("category", value)
+                    }
                   >
                     <SelectTrigger id="category">
                       <SelectValue placeholder="Select category" />
@@ -160,7 +165,7 @@ export default function NewTicket() {
                     </SelectContent>
                   </Select>
                 </div>
-                
+
                 <div className="space-y-2">
                   <Label htmlFor="type">Type *</Label>
                   <Select
@@ -185,7 +190,9 @@ export default function NewTicket() {
                 <Label htmlFor="priority">Priority *</Label>
                 <Select
                   value={formData.priority}
-                  onValueChange={(value) => handleInputChange("priority", value)}
+                  onValueChange={(value) =>
+                    handleInputChange("priority", value)
+                  }
                 >
                   <SelectTrigger id="priority">
                     <SelectValue placeholder="Select priority level" />
@@ -206,7 +213,9 @@ export default function NewTicket() {
                   id="description"
                   placeholder="Provide detailed information about your issue or request..."
                   value={formData.description}
-                  onChange={(e) => handleInputChange("description", e.target.value)}
+                  onChange={(e) =>
+                    handleInputChange("description", e.target.value)
+                  }
                   rows={6}
                   required
                   className="resize-none"
@@ -223,7 +232,7 @@ export default function NewTicket() {
                   variant="outline"
                   onClick={() => {
                     setFormData({
-                      date: new Date().toISOString().split('T')[0],
+                      date: new Date().toISOString().split("T")[0],
                       name: "",
                       department: "",
                       subject: "",

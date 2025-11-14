@@ -1,14 +1,20 @@
 import { Card } from "@/components/ui/card";
-import { useTickets } from "@/components/shared/TicketContext";
+import { useTickets } from "@/contexts/TicketContext";
 
 export default function Dashboard() {
   const { tickets } = useTickets();
 
   // Count totals by status
   const totalTickets = tickets.length;
-  const totalSolved = tickets.filter((t: any) => t.status === "Resolved" || t.status === "Closed").length;
-  const totalAwaiting = tickets.filter((t: any) => t.status === "Awaiting Approval" || t.status === "On Hold").length;
-  const totalInProgress = tickets.filter((t: any) => t.status === "In Progress").length;
+  const totalSolved = tickets.filter(
+    (t: any) => t.status === "Resolved" || t.status === "Closed"
+  ).length;
+  const totalAwaiting = tickets.filter(
+    (t: any) => t.status === "Awaiting Approval" || t.status === "On Hold"
+  ).length;
+  const totalInProgress = tickets.filter(
+    (t: any) => t.status === "In Progress"
+  ).length;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 p-6">

@@ -1,6 +1,6 @@
 // router.tsx (Updated)
 import { Routes, Route } from "react-router-dom";
-import { TicketProvider } from "@/components/shared/TicketContext";
+import { TicketProvider } from "@/contexts/TicketContext";
 
 /** Layouts */
 import AppLayout from "@/layouts/AppLayout";
@@ -25,33 +25,31 @@ import NewTicket from "@/pages/user/NewTicket";
 
 export default function router() {
   return (
-    <TicketProvider>
-      <Routes>
-        {/* Public Routes */}
-        <Route element={<PublicRoute />}>
-          <Route element={<AppLayout />}>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/services" element={<Services />} />
-            <Route path="/contact" element={<Contact />} />
-          </Route>
-
-          {/* Authentication Routes */}
-          <Route element={<AuthLayout />}>
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-          </Route>
+    <Routes>
+      {/* Public Routes */}
+      <Route element={<PublicRoute />}>
+        <Route element={<AppLayout />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/services" element={<Services />} />
+          <Route path="/contact" element={<Contact />} />
         </Route>
 
-        {/* Protected Routes - Wrapped with TicketProvider */}
-        <Route element={<ProtectedRoute />}>
-          <Route element={<DashboardLayout />}>
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/my-ticket" element={<MyTicket />} />
-            <Route path="/new-ticket" element={<NewTicket />}/>
-          </Route>
+        {/* Authentication Routes */}
+        <Route element={<AuthLayout />}>
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
         </Route>
-      </Routes>
-    </TicketProvider>
+      </Route>
+
+      {/* Protected Routes - Wrapped with TicketProvider */}
+      <Route element={<ProtectedRoute />}>
+        <Route element={<DashboardLayout />}>
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/my-ticket" element={<MyTicket />} />
+          <Route path="/new-ticket" element={<NewTicket />} />
+        </Route>
+      </Route>
+    </Routes>
   );
 }
