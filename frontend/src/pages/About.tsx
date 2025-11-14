@@ -132,7 +132,7 @@ export default function About() {
                 </li>
                 <li className="flex items-center gap-3">
                   <div className="w-2 h-2 bg-purple-400 rounded-full"></div>
-                  <span className="text-gray-300"><strong>TypeScript</strong> - Type-safe development</span>
+                  <span className="text-gray-300"><strong>TypeScript</strong> - Type-safe development for predictable</span>
                 </li>
                 <li className="flex items-center gap-3">
                   <div className="w-2 h-2 bg-purple-400 rounded-full"></div>
@@ -155,11 +155,11 @@ export default function About() {
                 </li>
                 <li className="flex items-center gap-3">
                   <div className="w-2 h-2 bg-pink-400 rounded-full"></div>
-                  <span className="text-gray-300"><strong>PostgreSQL</strong> - Reliable database</span>
+                  <span className="text-gray-300"><strong>MySQL</strong> - Reliable database</span>
                 </li>
                 <li className="flex items-center gap-3">
                   <div className="w-2 h-2 bg-pink-400 rounded-full"></div>
-                  <span className="text-gray-300"><strong>Authentication</strong> - Secure user management</span>
+                  <span className="text-gray-300"><strong>Authentication</strong> - Devise + JWT for secure user management</span>
                 </li>
               </ul>
             </Card>
