@@ -64,9 +64,10 @@ export default function router() {
         </Route>
       </Route>
 
+      {/* Admin Routes - will add /admin/ to path */}
       <Route element={<ProtectedRoute />}>
         <Route element={<AdminDashboardLayout />}>
-          <Route path="/adminDashboard" element={<AdminDashboard />} />
+          <Route path="/admin-dashboard" element={<AdminDashboard />} />
           <Route path="/database" element={<Database />} />
           <Route path="/approval" element={<Approval />} />
           <Route path="/performance" element={<Performance />} />
