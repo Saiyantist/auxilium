@@ -12,7 +12,13 @@ class TicketPolicy < ApplicationPolicy
 
   def show?
     return false unless user
-    user.admin? || user.agent? || record.creator_id == user.id || record.assignee_id == user.id
+
+    return true if user.admin?  # Admins see all
+    return true if user.agent? && (record.assignee_id == user.id || record.assignee_id.nil?)  # Agent sees their assigned tickets and tickets that are not assigned to any agent
+    return true if user.client? && record.creator_id == user.id  # Client sees own tickets
+    return true if record.assignee_id == user.id
+
+    false
   end
 
   # Clients and Agents can create tickets
@@ -52,18 +58,18 @@ class TicketPolicy < ApplicationPolicy
     # end
     
     def resolve
+      return scope.none unless user.present? # Extra guard to show none if unauthorized access. 
+
       return scope.all if user.admin?
 
-      if user.agent?
-        # Agents see all tickets assigned to them and unassigned tickets
-        scope.where("assignee_id = ? OR assignee_id IS NULL", user.id)
-
-      elsif user.client?
-        # Clients see own tickets
-        scope.where(creator_id: user.id)
-      else
-        scope.none
-      end
+      # Agents see all tickets assigned to them and unassigned tickets
+      return scope.where("assignee_id = ? OR assignee_id IS NULL", user.id) if user&.agent?
+      # return scope.where(assignee_id: user.id) if user&.agent?
+      
+      # Clients see own tickets
+      return scope.where(creator_id: user.id) if user&.client?
+      
+      scope.none
     end
   end
 end
