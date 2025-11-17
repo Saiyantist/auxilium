@@ -16,7 +16,6 @@ import {
   CardContent,
   CardDescription,
   CardHeader,
-  CardTitle,
 } from "@/components/ui/card";
 import { Calendar } from "lucide-react";
 import { useTickets } from "@/contexts/TicketContext";

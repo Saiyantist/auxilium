@@ -54,11 +54,11 @@ export default function AppSidebar() {
                 </SidebarMenuButton>
               </SidebarMenuItem>
 
-              {/* Users*/}
+              {/* User Management*/}
               <SidebarMenuItem>
                 <SidebarMenuButton
                   asChild
-                  isActive={location.pathname === "/users"}
+                  isActive={location.pathname === "/user-management"}
                 >
                   <NavLink to="/users">
                     <Users className="w-5 h-5" />

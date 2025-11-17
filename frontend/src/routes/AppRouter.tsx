@@ -1,6 +1,5 @@
 // router.tsx (Updated)
 import { Routes, Route } from "react-router-dom";
-import { TicketProvider } from "@/contexts/TicketContext";
 
 /** Layouts */
 import AppLayout from "@/layouts/AppLayout";
@@ -31,7 +30,7 @@ import NewTicket from "@/pages/user/NewTicket";
 import Approval from "@/pages/admin/Approval";
 import Performance from "@/pages/admin/Performance";
 import Settings from "@/pages/admin/Settings";
-import Users from "@/pages/admin/Users";
+import UserManagement from "@/pages/admin/UserManagement";
 import UserHistory from "@/pages/admin/UserHistory";
 import AdminDashboard from "@/pages/admin/AdminDashboard";
 import AdminDashboardLayout from "@/layouts/AdminDashboardLayout";
@@ -59,6 +58,7 @@ export default function router() {
       <Route element={<ProtectedRoute />}>
         <Route element={<DashboardLayout />}>
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/agent-dashboard" element={<Dashboard />} /> {/* Temporary */}
           <Route path="/my-ticket" element={<MyTicket />} />
           <Route path="/new-ticket" element={<NewTicket />} />
         </Route>
@@ -72,7 +72,7 @@ export default function router() {
           <Route path="/performance" element={<Performance />} />
           <Route path="/settings" element={<Settings />} />
           <Route path="/user-history" element={<UserHistory />} />
-          <Route path="/users" element={<Users />} />
+          <Route path="/user-management" element={<UserManagement />} />
         </Route>  
       </Route>
     </Routes>
