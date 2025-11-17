@@ -60,7 +60,7 @@ export default function AppSidebar() {
                   asChild
                   isActive={location.pathname === "/user-management"}
                 >
-                  <NavLink to="/users">
+                  <NavLink to="/user-management">
                     <Users className="w-5 h-5" />
                     <span>Users</span>
                   </NavLink>
