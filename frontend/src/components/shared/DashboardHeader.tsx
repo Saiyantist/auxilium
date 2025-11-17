@@ -25,7 +25,7 @@ export default function DashboardHeader() {
       <div className="flex justify-between items-end">
         <div className="flex items-center gap-4">
           <SidebarTrigger className="text-white hover:bg-purple-600" />
-          <h2 className="text-xl font-semibold">Auxilium Helpdesk</h2>
+          <h2 className="text-xl font-semibold">Auxilium Helpdesk - ADMIN</h2>
         </div>
  
         {/* Admin Links for placeholder only waiting for backend function */}

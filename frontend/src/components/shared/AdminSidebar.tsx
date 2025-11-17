@@ -1,4 +1,4 @@
-import { ChartColumn, Bolt, Database, Home, Ticket } from "lucide-react";
+import { ChartColumn, Bolt, BookUser, Users, Home, Ticket } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -61,7 +61,7 @@ export default function AppSidebar() {
                   isActive={location.pathname === "/users"}
                 >
                   <NavLink to="/users">
-                    <Home className="w-5 h-5" />
+                    <Users className="w-5 h-5" />
                     <span>Users</span>
                   </NavLink>
                 </SidebarMenuButton>
@@ -74,7 +74,7 @@ export default function AppSidebar() {
                   isActive={location.pathname === "/user-history"}
                 >
                   <NavLink to="/user-history">
-                    <Home className="w-5 h-5" />
+                    <BookUser className="w-5 h-5" />
                     <span>User Log History</span>
                   </NavLink>
                 </SidebarMenuButton>
