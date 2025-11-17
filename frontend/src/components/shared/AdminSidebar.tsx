@@ -32,24 +32,11 @@ export default function AppSidebar() {
               <SidebarMenuItem>
                 <SidebarMenuButton
                   asChild
-                  isActive={location.pathname === "/adminDashboard"}
+                  isActive={location.pathname === "/admin-dashboard"}
                 >
-                  <NavLink to="/adminDashboard">
+                  <NavLink to="/admin-dashboard">
                     <Home className="w-5 h-5" />
                     <span>Dashboard</span>
-                  </NavLink>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-
-              {/* Database */}
-              <SidebarMenuItem>
-                <SidebarMenuButton
-                  asChild
-                  isActive={location.pathname === "/database"}
-                >
-                  <NavLink to="/database">
-                    <Database className="w-5 h-5" />
-                    <span>Database</span>
                   </NavLink>
                 </SidebarMenuButton>
               </SidebarMenuItem>
@@ -63,6 +50,19 @@ export default function AppSidebar() {
                   <NavLink to="/settings">
                     <Bolt className="w-5 h-5" />
                     <span>Settings</span>
+                  </NavLink>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+
+              {/* Users*/}
+              <SidebarMenuItem>
+                <SidebarMenuButton
+                  asChild
+                  isActive={location.pathname === "/users"}
+                >
+                  <NavLink to="/users">
+                    <Home className="w-5 h-5" />
+                    <span>Users</span>
                   </NavLink>
                 </SidebarMenuButton>
               </SidebarMenuItem>
