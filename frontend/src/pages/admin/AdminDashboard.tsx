@@ -1,6 +1,8 @@
 import { Card } from "@/components/ui/card";
 import { useTickets } from "@/contexts/TicketContext";
 import performanceImage from "@/assets/performance.png";
+import agentImage from "@/assets/agent.png";
+import userImage from "@/assets/user.png";
 
 
 export default function AdminDashboard() {
@@ -61,15 +63,55 @@ export default function AdminDashboard() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-6xl mx-auto">
-        <Card className="bg-green-100 p-7 text-center hover:shadow-xl transition-shadow border-t-4 border-green-300">
-          <img src={performanceImage} alt="graph" className="w-52 h-52 place-items-center" />
-          <h3 className="text-5xl font-semibold mb-3 text-gray-800 mt-12">Performance</h3>
-        </Card>
-        <Card className="bg-green-100 p-7 text-center hover:shadow-xl transition-shadow border-t-4 border-green-300">
-          <p className="text-gray-600 font-medium">Placeholder for Future Metrics</p>
-          <h3 className="text-5xl font-semibold mb-3 text-gray-800 mt-12">
-            More to Come!
-          </h3>
+  {/* Performance Card */}
+  <Card className="bg-rose-100 p-1 text-center hover:shadow-xl transition-shadow border-t-4 border-red-300 flex flex-col items-center">
+    <div className="flex justify-center items-center w-full h-52">
+      <img
+        src={performanceImage}
+        alt="Performance graph"
+        className="w-52 h-52 object-contain"
+      />
+    </div>
+    <h3 className="text-5xl font-semibold mb-3 text-gray-800 mt-2">Performance</h3>
+  </Card>
+
+  {/* User & Agent Card */}
+  <Card className="bg-sky-100 p-7 hover:shadow-xl transition-shadow border-t-4 border-blue-300">
+    <div className="grid grid-cols-2 gap-8 text-center">
+      {/* Users */}
+      <div className="flex flex-col items-center">
+        <img
+          src={userImage}
+          alt="User icon"
+          className="w-40 h-40 mb-3 object-contain"
+        />
+        <span className="text-3xl font-bold text-gray-800">0</span>
+        <span className="text-sm font-medium text-gray-600 mt-1">Users</span>
+      </div>
+
+      {/* Agent Team */}
+      <div className="flex flex-col items-center">
+        <img
+          src={agentImage}
+          alt="Agent team icon"
+          className="w-40 h-40 mb-3 object-contain"
+        />
+        <span className="text-3xl font-bold text-gray-800">0</span>
+        <span className="text-sm font-medium text-gray-600 mt-1">
+          Agent Team
+        </span>
+      </div>
+    </div>
+  </Card>
+</div>
+
+      <div className="my-12">
+        {/* Future Metrics Card */}
+        <Card className="bg-yellow-100 p-7 text-center hover:shadow-xl transition-shadow border-t-4 border-yellow-300 flex flex-col justify-center">
+          <p className="text-gray-600 font-medium text-3xl">Customer Feedbacks</p>
+            <h3 className="text-5xl font-semibold mb-3 text-gray-800 mt-12">
+            ⭐⭐⭐⭐⭐
+            </h3>
         </Card>
       </div>
     </div>

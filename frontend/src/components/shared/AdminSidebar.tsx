@@ -1,4 +1,4 @@
-import { ChartColumn, Bolt, Database, Home, Ticket } from "lucide-react";
+import { ChartColumn, Bolt, BookUser, Users, Home, Ticket } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -32,24 +32,11 @@ export default function AppSidebar() {
               <SidebarMenuItem>
                 <SidebarMenuButton
                   asChild
-                  isActive={location.pathname === "/adminDashboard"}
+                  isActive={location.pathname === "/admin-dashboard"}
                 >
-                  <NavLink to="/adminDashboard">
+                  <NavLink to="/admin-dashboard">
                     <Home className="w-5 h-5" />
                     <span>Dashboard</span>
-                  </NavLink>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-
-              {/* Database */}
-              <SidebarMenuItem>
-                <SidebarMenuButton
-                  asChild
-                  isActive={location.pathname === "/database"}
-                >
-                  <NavLink to="/database">
-                    <Database className="w-5 h-5" />
-                    <span>Database</span>
                   </NavLink>
                 </SidebarMenuButton>
               </SidebarMenuItem>
@@ -67,6 +54,19 @@ export default function AppSidebar() {
                 </SidebarMenuButton>
               </SidebarMenuItem>
 
+              {/* User Management*/}
+              <SidebarMenuItem>
+                <SidebarMenuButton
+                  asChild
+                  isActive={location.pathname === "/user-management"}
+                >
+                  <NavLink to="/user-management">
+                    <Users className="w-5 h-5" />
+                    <span>Users</span>
+                  </NavLink>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+
               {/* User Log History */}
               <SidebarMenuItem>
                 <SidebarMenuButton
@@ -74,7 +74,7 @@ export default function AppSidebar() {
                   isActive={location.pathname === "/user-history"}
                 >
                   <NavLink to="/user-history">
-                    <Home className="w-5 h-5" />
+                    <BookUser className="w-5 h-5" />
                     <span>User Log History</span>
                   </NavLink>
                 </SidebarMenuButton>
