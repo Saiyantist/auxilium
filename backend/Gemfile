@@ -44,6 +44,9 @@ gem 'devise'
 # JWT for api
 gem 'devise-jwt'
 
+# Role-Based Access Control
+gem 'pundit'
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ]
