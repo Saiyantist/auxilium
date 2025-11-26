@@ -14,7 +14,7 @@ export interface AuthResponse {
 export async function register(email: string, password: string) {
   try {
     const response = await API.post("/users", { user: { email, password } });
-    const token = response.headers.authorization?.split(" ")[1];
+    const token = response.data.token;
     if (token) localStorage.setItem("token", token);
     return response.data as User;
   } catch (err: any) {
