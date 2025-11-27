@@ -8,17 +8,24 @@ import {
   Check,
   X,
 } from 'lucide-react';
-import { useTickets, type Priority } from '@/contexts/TicketContext';
+import { useTickets, type Priority, type Ticket } from '@/contexts/TicketContext';
 
 export default function Approval() {
-  const { tickets } = useTickets();
+  const { tickets, updateTicket } = useTickets();
   const [entriesPerPage, setEntriesPerPage] = useState<number>(10);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [searchQuery, setSearchQuery] = useState<string>('');
+  const [modalType, setModalType] = useState<'details' | 'assign' | 'confirm' | null>(null); // Added 'confirm' to union type
+  const [selectedTicket, setSelectedTicket] = useState<Ticket | null>(null);
+  const [assigneeId, setAssigneeId] = useState<string>('');
+  const [confirmAction, setConfirmAction] = useState<'approve' | 'reject' | null>(null); // Added state for confirm action type
 
-  // Filter tickets by ticket number
-  const filteredTickets = tickets.filter((ticket) =>
-    ticket.id.toString().includes(searchQuery)
+  // Filter to pending tickets first
+  const pendingTickets = tickets.filter((ticket: Ticket) => ticket.status === 'pending');
+
+  // Then filter by ticket number
+  const filteredTickets = pendingTickets.filter((ticket: Ticket) =>
+    ticket.number.includes(searchQuery)
   );
 
   const totalPages = Math.ceil(filteredTickets.length / entriesPerPage);
@@ -36,19 +43,50 @@ export default function Approval() {
     setCurrentPage(1);
   };
 
-  const handleApprove = (ticketId: number) => {
-    console.log('Approved ticket:', ticketId);
-    // TODO: implement actual approval logic (update context or API call)
+  const handleViewTicket = (ticket: Ticket) => {
+    setSelectedTicket(ticket);
+    setModalType('details');
   };
 
-  const handleReject = (ticketId: number) => {
-    console.log('Rejected ticket:', ticketId);
-    // TODO: implement actual rejection logic
+  const handleApproveClick = (ticket: Ticket) => { // Renamed to handleApproveClick and updated to open confirm modal
+    setSelectedTicket(ticket);
+    setConfirmAction('approve');
+    setModalType('confirm');
+  };
+
+  const handleRejectClick = (ticket: Ticket) => { // Renamed to handleRejectClick and updated to open confirm modal
+    setSelectedTicket(ticket);
+    setConfirmAction('reject');
+    setModalType('confirm');
+  };
+
+  const handleConfirmAction = () => { // Added handler for confirming the action in the modal
+    if (selectedTicket && confirmAction) {
+      updateTicket(selectedTicket.id, { status: confirmAction === 'approve' ? 'approved' : 'rejected' });
+      handleCloseModal();
+    }
   };
 
   const handleAssign = (ticketId: number) => {
-    console.log('Assign ticket:', ticketId);
-    // TODO: implement assign logic (maybe open modal, idk)
+    const ticket = pendingTickets.find((t: Ticket) => t.id === ticketId);
+    if (ticket) {
+      setSelectedTicket(ticket);
+      setModalType('assign');
+    }
+  };
+
+  const handleCloseModal = () => {
+    setModalType(null);
+    setSelectedTicket(null);
+    setAssigneeId('');
+    setConfirmAction(null); // Reset confirm action on close
+  };
+
+  const handleSubmitAssign = () => {
+    if (selectedTicket && assigneeId) {
+      updateTicket(selectedTicket.id, { assignee_id: Number(assigneeId) });
+      handleCloseModal();
+    }
   };
 
   const getPriorityColor = (priority: Priority): string => {
@@ -133,13 +171,16 @@ export default function Approval() {
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {currentTickets.map((ticket, index) => (
+                {currentTickets.map((ticket: Ticket, index: number) => (
                   <tr
                     key={ticket.id}
                     className={index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}
                   >
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 underline cursor-pointer hover:text-teal-600">
-                      {ticket.id}
+                    <td
+                      className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 underline cursor-pointer hover:text-teal-600"
+                      onClick={() => handleViewTicket(ticket)}
+                    >
+                      {ticket.number}
                     </td>
                     <td className="px-6 py-4 text-sm text-gray-900">
                       {ticket.subject}
@@ -156,14 +197,14 @@ export default function Approval() {
                     <td className="px-6 py-4 whitespace-nowrap text-sm">
                       <div className="flex items-center gap-2">
                         <button
-                          onClick={() => handleApprove(ticket.id)}
+                          onClick={() => handleApproveClick(ticket)} // Updated to handleApproveClick with ticket param
                           className="p-1.5 hover:bg-green-100 rounded transition-colors"
                           title="Approve"
                         >
                           <Check className="w-5 h-5 text-green-600" />
                         </button>
                         <button
-                          onClick={() => handleReject(ticket.id)}
+                          onClick={() => handleRejectClick(ticket)} // Updated to handleRejectClick with ticket param
                           className="p-1.5 hover:bg-red-100 rounded transition-colors"
                           title="Reject"
                         >
@@ -192,7 +233,7 @@ export default function Approval() {
               {Math.min(endIndex, filteredTickets.length)} of {filteredTickets.length} entries
               {searchQuery && (
                 <span className="ml-1">
-                  (filtered from {tickets.length} total entries)
+                  (filtered from {pendingTickets.length} pending entries)
                 </span>
               )}
             </div>
@@ -239,6 +280,87 @@ export default function Approval() {
           </div>
         </div>
       </div>
+
+      {/* Modal */}
+      {modalType && selectedTicket && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded-lg max-w-2xl w-full max-h-[80vh] overflow-auto">
+            <h2 className="text-xl font-bold mb-4">
+              {modalType === 'details' ? 'Ticket Details' : modalType === 'assign' ? 'Assign Ticket' : 'Confirm Action'}
+            </h2>
+            {modalType === 'details' ? (
+              <div className="space-y-2">
+                <p><strong>ID:</strong> {selectedTicket.id}</p>
+                <p><strong>Number:</strong> {selectedTicket.number || 'N/A'}</p>
+                <p><strong>Subject:</strong> {selectedTicket.subject}</p>
+                <p><strong>Description:</strong> {selectedTicket.description || 'N/A'}</p>
+                <p><strong>Status:</strong> {selectedTicket.status || 'N/A'}</p>
+                <p><strong>Priority:</strong> {selectedTicket.priority}</p>
+                <p><strong>Severity:</strong> {selectedTicket.severity || 'N/A'}</p>
+                <p><strong>Ticket Type:</strong> {selectedTicket.type || 'N/A'}</p>
+                <p><strong>Category:</strong> {selectedTicket.category || 'N/A'}</p>
+                <p><strong>Category ID:</strong> {selectedTicket.category_id || 'N/A'}</p>
+                <p><strong>Project ID:</strong> {selectedTicket.project_id || 'N/A'}</p>
+                <p><strong>Creator ID:</strong> {selectedTicket.creator_id || 'N/A'}</p>
+                <p><strong>Assignee ID:</strong> {selectedTicket.assignee_id || 'N/A'}</p>
+                <p><strong>Due Date:</strong> {selectedTicket.due_date || 'N/A'}</p>
+                <p><strong>Closed At:</strong> {selectedTicket.closed_at || 'N/A'}</p>
+                <p><strong>Created At:</strong> {selectedTicket.created_at || selectedTicket.date}</p>
+                <p><strong>Updated At:</strong> {selectedTicket.updated_at || 'N/A'}</p>
+              </div>
+            ) : modalType === 'assign' ? (
+              <div className="space-y-4">
+                <p><strong>Ticket:</strong> {selectedTicket.subject} ({selectedTicket.number})</p>
+                <input
+                  type="number"
+                  value={assigneeId}
+                  onChange={(e) => setAssigneeId(e.target.value)}
+                  placeholder="Enter assignee ID"
+                  className="w-full px-4 py-2 bg-gray-100 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+                />
+                <button
+                  onClick={handleSubmitAssign}
+                  className="px-4 py-2 bg-teal-500 text-white rounded hover:bg-teal-600 transition-colors"
+                >
+                  Assign
+                </button>
+              </div>
+            ) : modalType === 'confirm' && confirmAction ? ( // Added confirm modal content
+              <div className="space-y-4">
+                <p>
+                  Are you sure you want to {confirmAction} the ticket "{selectedTicket.subject}" ({selectedTicket.number})?
+                </p>
+                <div className="flex justify-end gap-2">
+                  <button
+                    onClick={handleConfirmAction}
+                    className={`px-4 py-2 rounded text-white transition-colors ${
+                      confirmAction === 'approve'
+                        ? 'bg-green-500 hover:bg-green-600'
+                        : 'bg-red-500 hover:bg-red-600'
+                    }`}
+                  >
+                    Confirm
+                  </button>
+                  <button
+                    onClick={handleCloseModal}
+                    className="px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition-colors"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            ) : null}
+            {modalType !== 'confirm' && ( // Conditionally render close button only for non-confirm modals
+              <button
+                onClick={handleCloseModal}
+                className="mt-6 px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition-colors"
+              >
+                Close
+              </button>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
