@@ -1,8 +1,9 @@
 // TicketContext.tsx
-import { createContext, useContext, useState } from "react";
-import type { ReactNode } from "react";
+import { createContext, useContext, useState, type ReactNode } from "react";
 
-interface Ticket {
+export type Priority = "Low" | "Medium" | "High";
+
+export interface Ticket {
   id: number;
   subject: string;
   status: string;
@@ -14,12 +15,12 @@ interface Ticket {
   description: string;
   category: string;
   type: string;
-  priority: string;
+  priority: Priority;
 }
 
 interface TicketContextType {
   tickets: Ticket[];
-  addTicket: (ticket: Omit<Ticket, 'id' | 'status' | 'supportBy' | 'rate'>) => void;
+  addTicket: (ticket: Omit<Ticket, "id" | "status" | "supportBy" | "rate">) => void;
 }
 
 const TicketContext = createContext<TicketContextType | undefined>(undefined);
@@ -38,7 +39,7 @@ export function TicketProvider({ children }: { children: ReactNode }) {
       description: "Cannot access system",
       category: "Technical",
       type: "Incident",
-      priority: "High"
+      priority: "High",
     },
     {
       id: 1124,
@@ -52,7 +53,7 @@ export function TicketProvider({ children }: { children: ReactNode }) {
       description: "Need new ticket feature",
       category: "Feature",
       type: "Request",
-      priority: "Medium"
+      priority: "Medium",
     },
     {
       id: 1224,
@@ -66,7 +67,7 @@ export function TicketProvider({ children }: { children: ReactNode }) {
       description: "Need database access",
       category: "Access",
       type: "Request",
-      priority: "Low"
+      priority: "Low",
     },
     {
       id: 1244,
@@ -80,7 +81,7 @@ export function TicketProvider({ children }: { children: ReactNode }) {
       description: "Submit new ticket",
       category: "Technical",
       type: "Incident",
-      priority: "High"
+      priority: "High",
     },
     {
       id: 1114,
@@ -94,11 +95,13 @@ export function TicketProvider({ children }: { children: ReactNode }) {
       description: "Password reset needed",
       category: "Technical",
       type: "Incident",
-      priority: "Medium"
-    }
+      priority: "Medium",
+    },
   ]);
 
-  const addTicket = (ticketData: Omit<Ticket, 'id' | 'status' | 'supportBy' | 'rate'>) => {
+  const addTicket = (
+    ticketData: Omit<Ticket, "id" | "status" | "supportBy" | "rate">
+  ) => {
     const newTicket: Ticket = {
       id: Math.floor(1000 + Math.random() * 9000),
       ...ticketData,
@@ -106,8 +109,8 @@ export function TicketProvider({ children }: { children: ReactNode }) {
       supportBy: "Tech support",
       rate: 0,
     };
-    
-    setTickets(prev => [newTicket, ...prev]);
+
+    setTickets((prev) => [newTicket, ...prev]);
   };
 
   return (
@@ -117,7 +120,7 @@ export function TicketProvider({ children }: { children: ReactNode }) {
   );
 }
 
-export function useTickets() {
+export function useTickets(): TicketContextType {
   const context = useContext(TicketContext);
   if (context === undefined) {
     throw new Error("useTickets must be used within a TicketProvider");

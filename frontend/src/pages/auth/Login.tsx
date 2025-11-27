@@ -1,7 +1,7 @@
-import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import {
   Card,
   CardHeader,
@@ -9,16 +9,17 @@ import {
   CardDescription,
   CardContent,
   CardFooter,
-} from "@/components/ui/card";
+} from '@/components/ui/card';
 // import { Facebook, Chrome, Twitter } from "lucide-react";
-import { useAuth } from "@/contexts/AuthContext";
-import { ChevronLeft } from "lucide-react";
+import { useAuth } from '@/hooks/use-auth';
+import { ChevronLeft } from 'lucide-react';
+import { getDashboardRoute } from '@/utils/routing';
 
 export default function Login() {
   const { login } = useAuth();
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
@@ -28,11 +29,11 @@ export default function Login() {
     setLoading(true);
 
     try {
-      await login(email, password);
-      navigate("/dashboard");
+      const loggedInUser = await login(email, password);
+      navigate(getDashboardRoute(loggedInUser.role));
     } catch (err: any) {
       console.error(err);
-      setError("Invalid email or password");
+      setError('Invalid email or password');
     } finally {
       setLoading(false);
     }
@@ -44,13 +45,11 @@ export default function Login() {
         <CardHeader className="p-2">
           <div className="absolute cursor-pointer rounded-full hover:bg-accent p-1">
             <Link to="/">
-              <ChevronLeft size={32}/>
+              <ChevronLeft size={32} />
             </Link>
           </div>
           <CardTitle>
-            <h2 className="text-3xl font-bold text-center mb-2 text-gray-800">
-              Login
-            </h2>
+            <h2 className="text-3xl font-bold text-center mb-2 text-gray-800">Login</h2>
           </CardTitle>
           <CardDescription className="text-center">
             Enter your email and password to login.
@@ -59,21 +58,20 @@ export default function Login() {
 
         <CardContent className="p-2 flex-1">
           <form onSubmit={handleLogin} className="space-y-6">
-
             <Input
               type="email"
               placeholder="Enter your email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              />
+            />
             <Input
               type="password"
               placeholder="Enter your password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              />
+            />
 
             {/* <div className="text-right">
               <Link
@@ -87,10 +85,10 @@ export default function Login() {
               type="submit"
               className="w-full bg-gradient-to-r from-blue-500 to-purple-500 text-white font-semibold rounded-full hover:opacity-90 transition"
               disabled={loading}
-              >
-              {loading ? "Signing In..." : "LOGIN"}
+            >
+              {loading ? 'Signing In...' : 'LOGIN'}
             </Button>
-            
+
             {error && (
               <p className="bg-red-50 border border-red-200 rounded-md p-2 text-red-500 text-sm mb-4 text-center">
                 {error}
@@ -114,11 +112,8 @@ export default function Login() {
           </div> */}
 
           <p className="text-center text-sm text-gray-600">
-            Don’t have an account?{" "}
-            <Link
-              to="/register"
-              className="text-purple-600 hover:underline font-medium"
-            >
+            Don’t have an account?{' '}
+            <Link to="/register" className="text-purple-600 hover:underline font-medium">
               Sign up
             </Link>
           </p>

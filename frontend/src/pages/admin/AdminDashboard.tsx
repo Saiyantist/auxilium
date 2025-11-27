@@ -21,8 +21,8 @@ export default function AdminDashboard() {
   ).length;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 p-6">
-      <h1 className="text-center text-3xl font-bold text-gray-800 mb-10">
+    <div className="min-h-screen bg-gradient-to-br p-10">
+      <h1 className="text-center text-4xl font-bold text-gray-800">
         Admin Dashboard
       </h1>
 

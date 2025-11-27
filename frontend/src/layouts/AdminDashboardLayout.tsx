@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
 import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
-import Sidebar from "@/components/shared/AdminSidebar";
+import Sidebar from "@/components/admin/AdminSidebar";
 import DashboardHeader from "@/components/shared/DashboardHeader";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { TicketProvider } from "@/contexts/TicketContext";

@@ -1,19 +1,17 @@
-import { NavLink, useNavigate } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { SidebarTrigger } from "@/components/ui/sidebar";
-import { useAuth } from "@/contexts/AuthContext";
+import { useNavigate } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { SidebarTrigger } from '@/components/ui/sidebar';
+import { useAuth } from '@/hooks/use-auth';
 
 export default function DashboardHeader() {
   const { logout } = useAuth();
-  const navigate = useNavigate();
 
   const handleLogout = async () => {
     try {
       await logout();
-      // navigate("/")
-      setTimeout(() => {navigate("/")}, 1)
+      // navigate('/login'); // no need, ProtectedRoute redirects to /login automatically.
     } catch (err: any) {
-      console.error(err)
+      console.error(err);
     }
   };
 
@@ -25,15 +23,16 @@ export default function DashboardHeader() {
       <div className="flex justify-between items-end">
         <div className="flex items-center gap-4">
           <SidebarTrigger className="text-white hover:bg-purple-600" />
-          <h2 className="text-xl font-semibold">Auxilium Helpdesk - ADMIN</h2>
+          <h2 className="text-xl font-semibold">Auxilium Helpdesk</h2>
         </div>
- 
-        {/* Admin Links for placeholder only waiting for backend function */}
-        <div className="flex items-center gap-6">
-          <NavLink to="">User Dashboard</NavLink>
-          <NavLink to="/agent-dashboard">Agent Dashboard</NavLink>
-          <NavLink to="/admin-dashboard">Admin Dashboard</NavLink>
-          <Button variant="outline" size="sm" onClick={handleLogout} className="text-primary">
+
+        <div className="">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={handleLogout}
+            className="text-primary"
+          >
             Logout
           </Button>
         </div>
