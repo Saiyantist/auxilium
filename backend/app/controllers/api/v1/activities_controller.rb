@@ -19,7 +19,7 @@ class Api::V1::ActivitiesController < ApplicationController
       id: a.id,
       action: a.action,
       metadata: a.metadata,
-      user: { id: a.user.id, email: a.user.email },
+      user: { id: a.user.id, first_name: a.user.first_name, last_name: a.user.last_name, email: a.user.email },
       created_at: a.created_at
     }
   end

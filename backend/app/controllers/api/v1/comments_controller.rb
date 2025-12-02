@@ -88,8 +88,8 @@ class Api::V1::CommentsController < ApplicationController
     {
       id: comment.id,
       ticket_id: comment.ticket_id,
-      user: { id: comment.user.id, email: comment.user.email},
-      # user: { id: comment.user.id, email: comment.user.email,name: comment.user.name },
+      # user: { id: comment.user.id, email: comment.user.email},
+      user: { id: comment.user.id, first_name: comment.user.first_name, last_name: comment.user.last_name, email: comment.user.email },
       content: comment.content,
       internal: comment.internal, 
       parent_id: comment.parent_id,
