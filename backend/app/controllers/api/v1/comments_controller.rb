@@ -23,7 +23,12 @@ class Api::V1::CommentsController < ApplicationController
 
     if @comment.save
       # Log activity (basic)
-      Activity.create(user: current_user, ticket: @ticket, action: "comment_created", metadata: { comment_id: @comment.id })
+      ActivityLogger.log(
+        user: current_user,
+        ticket: @ticket,
+        action: "comment_created",
+        metadata: { comment_id: @comment.id }
+      )
       render json: comment_json(@comment), status: :created
     else
       render json: { errors: @comment.errors.full_messages }, status: :unprocessable_entity
@@ -34,7 +39,12 @@ class Api::V1::CommentsController < ApplicationController
   def update
     authorize @comment
     if @comment.update(comment_params)
-      Activity.create(user: current_user, ticket: @ticket, action: "comment_updated", metadata: { comment_id: @comment.id })
+      ActivityLogger.log(
+        user: current_user,
+        ticket: @ticket,
+        action: "comment_updated",
+        metadata: { comment_id: @comment.id }
+      )
       render json: comment_json(@comment)
     else
       render json: { errors: @comment.errors.full_messages }, status: :unprocessable_entity
@@ -45,7 +55,12 @@ class Api::V1::CommentsController < ApplicationController
   def destroy
     authorize @comment
     @comment.destroy
-    Activity.create(user: current_user, ticket: @ticket, action: "comment_deleted", metadata: { comment_id: @comment.id })
+    ActivityLogger.log(
+      user: current_user,
+      ticket: @ticket,
+      action: "comment_deleted",
+      metadata: { comment_id: @comment.id }
+    )
     head :no_content
   end
 
