@@ -18,6 +18,12 @@ class Api::V1::TicketsController < ApplicationController
       authorize @ticket
   
       if @ticket.save
+        ActivityLogger.log(
+          user: current_user,
+          ticket: @ticket,
+          action: "ticket_created",
+          metadata: { subject: @ticket.subject }
+        )
         render json: @ticket, status: :created
       else
         render json: { errors: @ticket.errors.full_messages }, status: :unprocessable_entity
