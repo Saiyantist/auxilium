@@ -34,6 +34,9 @@ import UserHistory from '@/pages/admin/UserHistory';
 import AdminDashboard from '@/pages/admin/AdminDashboard';
 import AdminDashboardLayout from '@/layouts/AdminDashboardLayout';
 
+// Test Pages
+import HooksTestPage from '@/pages/HookTest';
+
 export default function router() {
   return (
     <Routes>
@@ -75,7 +78,14 @@ export default function router() {
           <Route path="/my-ticket" element={<MyTicket />} />
           <Route path="/new-ticket" element={<NewTicket />} />
           {/* add more routes dito */}
-        </Route>``
+        </Route>
+      </Route>
+
+      {/* Shared routes for all - FOR FE INTEGRATION TESTING PURPOSES */}
+      <Route element={<ProtectedRoute allowedRoles={['client', 'agent', 'admin']} />}>
+        <Route element={<DashboardLayout />}>
+          <Route path="/hooks-testing" element={<HooksTestPage />} />
+        </Route>
       </Route>
 
       {/* Admin Routes - Only accessible to admin(s) */}
