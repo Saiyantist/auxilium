@@ -1,10 +1,5 @@
 import API from "./api";
-
-export interface User {
-  id: number;
-  email: string;
-  role: string;
-}
+import type { User } from "@/types"; 
 
 export interface AuthResponse {
   user: User;

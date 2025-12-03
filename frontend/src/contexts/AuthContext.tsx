@@ -4,7 +4,7 @@ import {
   logout as apiLogout,
   register as apiRegister,
 } from '@/services/auth';
-import type { User } from '@/services/auth';
+import type { User } from '@/types';
 
 interface AuthContextType {
   user: User | null;
@@ -19,8 +19,8 @@ export const AuthContext = createContext<AuthContextType>({
   user: null,
   token: null,
   loading: true,
-  login: async () => ({ id: 0, email: '', role: '' }),
-  register: async () => ({ id: 0, email: '', role: '' }),
+  login: async () => ({ id: 0, first_name: '', last_name: '', email: '', role: '' }),
+  register: async () => ({ id: 0, first_name: '', last_name: '', email: '', role: '' }),
   logout: async () => {},
 });
 
