@@ -30,6 +30,8 @@ class Users::SessionsController < Devise::SessionsController
   def respond_with(resource, _opts = {})
     render json: {
       id: resource.id,
+      first_name: resource.first_name,
+      last_name: resource.last_name,
       email: resource.email,
       role: resource.role,
       token: request.env['warden-jwt_auth.token']
