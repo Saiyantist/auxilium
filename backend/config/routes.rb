@@ -21,11 +21,11 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
-
+  
   # API routes
   namespace :api do
     namespace :v1 do
-      # Define routes here
+      resources :tickets 
     end
   end
 end
