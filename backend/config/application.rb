@@ -45,5 +45,7 @@ module Backend
     # config.middleware.delete ActionDispatch::Flash rescue nil
     # config.middleware.delete ActionDispatch::Cookies rescue nil
     # config.middleware.delete ActionDispatch::Session::CookieStore rescue nil
+
+    config.autoload_paths << Rails.root.join("app/services")
   end
 end

@@ -25,7 +25,10 @@ Rails.application.routes.draw do
   # API routes
   namespace :api do
     namespace :v1 do
-      resources :tickets 
+      resources :tickets do
+        resources :activities, only: [:index]
+        resources :comments, only: %i[index show create update destroy]
+      end
     end
   end
 end
