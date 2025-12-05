@@ -33,16 +33,6 @@ export default function Header() {
             </li>
             <li>
               <NavLink
-                to="/services"
-                className={({ isActive }) =>
-                  `${isActive ? "font-bold border-b border-white px-2" : ""}`
-                }
-              >
-                Services
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
                 to="/contact"
                 className={({ isActive }) =>
                   `${isActive ? "font-bold border-b border-white px-2" : ""}`

@@ -20,7 +20,6 @@ import Register from '@/pages/auth/Register';
 
 // User Dashboard Pages
 import Dashboard from '@/pages/user/Dashboard';
-import Services from '@/pages/Services';
 import Contact from '@/pages/Contact';
 import MyTicket from '@/pages/user/MyTicket';
 import NewTicket from '@/pages/user/NewTicket';
@@ -45,7 +44,6 @@ export default function router() {
         <Route element={<AppLayout />}>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
-          <Route path="/services" element={<Services />} />
           <Route path="/contact" element={<Contact />} />
         </Route>
 
