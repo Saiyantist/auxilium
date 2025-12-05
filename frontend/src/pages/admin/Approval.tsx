@@ -12,16 +12,25 @@ import {
 } from 'lucide-react';
 import { useTickets, type Priority } from '@/contexts/TicketContext';
 
-// Static mock assignees (for demo)
-const MOCK_ASSIGNEES = [
-  'Jose Luis Vincent',
-  'Ryan James Pancho',
-  'Jerome Abad',
-  'Tralalero Tralala',
-  'Brr Brr Patapim',
-  'Mruno Bars',
-  'Saylor Twift',
-  'Pancho Master',
+// Agent interface and data
+export interface Agent {
+  id: number;
+  name: string;
+  role: string;
+  email: string;
+  status: string;
+  ticketsAssigned: number;
+}
+
+export const MOCK_AGENTS: Agent[] = [
+  { id: 1, name: 'Jose Luis Vincent', role: 'Senior Agent', email: 'jose.vincent@company.com', status: 'Active', ticketsAssigned: 12 },
+  { id: 2, name: 'Ryan James Pancho', role: 'Support Agent', email: 'ryan.pancho@company.com', status: 'Active', ticketsAssigned: 8 },
+  { id: 3, name: 'Jerome Abad', role: 'Lead Agent', email: 'jerome.abad@company.com', status: 'Active', ticketsAssigned: 15 },
+  { id: 4, name: 'Tralalero Tralala', role: 'Support Agent', email: 'tralalero.tralala@company.com', status: 'Active', ticketsAssigned: 5 },
+  { id: 5, name: 'Brr Brr Patapim', role: 'Technical Agent', email: 'brr.patapim@company.com', status: 'Active', ticketsAssigned: 10 },
+  { id: 6, name: 'Mruno Bars', role: 'Support Agent', email: 'mruno.bars@company.com', status: 'Active', ticketsAssigned: 7 },
+  { id: 7, name: 'Saylor Twift', role: 'Senior Agent', email: 'saylor.twift@company.com', status: 'Active', ticketsAssigned: 14 },
+  { id: 8, name: 'Pancho Master', role: 'Lead Agent', email: 'pancho.master@company.com', status: 'Active', ticketsAssigned: 9 },
 ];
 
 export default function Approval() {
@@ -80,7 +89,7 @@ export default function Approval() {
       approveTicket?.(confirmModal.ticketId);
       console.log('Approved ticket:', confirmModal.ticketId);
     } else if (confirmModal.action === 'reject') {
-      rejectTicket?.(confirmModal.ticketId); // This could just mark as deleted/soft-delete
+      rejectTicket?.(confirmModal.ticketId);
       console.log('Rejected ticket:', confirmModal.ticketId);
     }
     closeConfirm();
@@ -88,7 +97,7 @@ export default function Approval() {
 
   // Assign modal handlers
   const openAssign = (ticketId: number) => {
-    setSelectedAssignee(MOCK_ASSIGNEES[0]); // default selection
+    setSelectedAssignee(MOCK_AGENTS[0].name); // default selection
     setAssignModal({ isOpen: true, ticketId });
   };
 
@@ -329,9 +338,9 @@ export default function Approval() {
                 onChange={(e) => setSelectedAssignee(e.target.value)}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
               >
-                {MOCK_ASSIGNEES.map((name) => (
-                  <option key={name} value={name}>
-                    {name}
+                {MOCK_AGENTS.map((agent) => (
+                  <option key={agent.id} value={agent.name}>
+                    {agent.name} - {agent.role}
                   </option>
                 ))}
               </select>
