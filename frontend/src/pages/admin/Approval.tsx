@@ -14,14 +14,14 @@ import { useTickets, type Priority } from '@/contexts/TicketContext';
 
 // Static mock assignees (for demo)
 const MOCK_ASSIGNEES = [
-  'Alice Johnson',
-  'Bob Smith',
-  'Carol Williams',
-  'David Brown',
-  'Eve Davis',
-  'Frank Miller',
-  'Grace Wilson',
-  'Henry Moore',
+  'Jose Luis Vincent',
+  'Ryan James Pancho',
+  'Jerome Abad',
+  'Tralalero Tralala',
+  'Brr Brr Patapim',
+  'Mruno Bars',
+  'Saylor Twift',
+  'Pancho Master',
 ];
 
 export default function Approval() {
@@ -81,7 +81,7 @@ export default function Approval() {
       console.log('Approved ticket:', confirmModal.ticketId);
     } else if (confirmModal.action === 'reject') {
       rejectTicket?.(confirmModal.ticketId); // This could just mark as deleted/soft-delete
-      console.log('Rejected (soft-deleted) ticket:', confirmModal.ticketId);
+      console.log('Rejected ticket:', confirmModal.ticketId);
     }
     closeConfirm();
   };
@@ -226,7 +226,7 @@ export default function Approval() {
                           <button
                             onClick={() => openConfirm(ticket.id, 'reject')}
                             className="p-2 hover:bg-red-100 rounded-full transition-colors"
-                            title="Reject Ticket (Soft Delete)"
+                            title="Reject Ticket"
                           >
                             <X className="w-5 h-5 text-red-600" />
                           </button>
@@ -289,7 +289,7 @@ export default function Approval() {
             </div>
             <p className="text-gray-600 mb-6">
               Are you sure you want to <strong>{confirmModal.action === 'approve' ? 'approve' : 'reject'}</strong> this ticket?
-              {confirmModal.action === 'reject' && <span className="block text-sm text-orange-600 mt-2">This will soft-delete the ticket.</span>}
+              {confirmModal.action === 'reject' && <span className="block text-sm text-orange-600 mt-2">This will delete the ticket.</span>}
             </p>
             <div className="flex justify-end gap-3">
               <button
