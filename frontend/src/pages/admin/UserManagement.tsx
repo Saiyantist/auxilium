@@ -3,8 +3,9 @@ import { Card } from '@/components/ui/card';
 import { ArrowLeft, Search } from 'lucide-react';
 import agentImage from '@/assets/agent.png';
 import userImage from '@/assets/user.png';
+import { MOCK_AGENTS } from './Approval';
 
-// Static mock users
+// Static mock users (unchanged)
 interface User {
   id: number;
   name: string;
@@ -24,27 +25,6 @@ const MOCK_USERS: User[] = [
   { id: 7, name: 'Eva Martinez', role: 'User', department: 'Engineering', email: 'eva.martinez@company.com', status: 'Active' },
 ];
 
-// Static mock agents
-interface Agent {
-  id: number;
-  name: string;
-  role: string;
-  email?: string;
-  status?: string;
-  ticketsAssigned?: number;
-}
-
-const MOCK_AGENTS: Agent[] = [
-  { id: 1, name: 'Alice Johnson', role: 'Agent', email: 'alice.johnson@company.com', status: 'Active', ticketsAssigned: 12 },
-  { id: 2, name: 'Bob Smith', role: 'Agent', email: 'bob.smith@company.com', status: 'Active', ticketsAssigned: 8 },
-  { id: 3, name: 'Carol Williams', role: 'Agent', email: 'carol.williams@company.com', status: 'Active', ticketsAssigned: 15 },
-  { id: 4, name: 'David Brown', role: 'Agent', email: 'david.brown@company.com', status: 'Inactive', ticketsAssigned: 0 },
-  { id: 5, name: 'Eve Davis', role: 'Agent', email: 'eve.davis@company.com', status: 'Active', ticketsAssigned: 10 },
-  { id: 6, name: 'Frank Miller', role: 'Agent', email: 'frank.miller@company.com', status: 'Active', ticketsAssigned: 7 },
-  { id: 7, name: 'Grace Wilson', role: 'Agent', email: 'grace.wilson@company.com', status: 'Active', ticketsAssigned: 14 },
-  { id: 8, name: 'Henry Moore', role: 'Agent', email: 'henry.moore@company.com', status: 'Active', ticketsAssigned: 9 },
-];
-
 export default function UserManagement() {
   const [viewMode, setViewMode] = useState<'cards' | 'userTable' | 'agentTable'>('cards');
   const [searchQuery, setSearchQuery] = useState('');
@@ -56,7 +36,7 @@ export default function UserManagement() {
     user.email?.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  // Filter agents based on search
+  // Filter agents based on search (now using imported MOCK_AGENTS)
   const filteredAgents = MOCK_AGENTS.filter(agent =>
     agent.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
     agent.email?.toLowerCase().includes(searchQuery.toLowerCase())
