@@ -20,7 +20,6 @@ import Register from '@/pages/auth/Register';
 // User Dashboard Pages
 import Dashboard from '@/pages/user/Dashboard';
 import Contact from '@/pages/Contact';
-import MyTicket from '@/pages/user/MyTicket';
 import NewTicket from '@/pages/user/NewTicket';
 
 //Admin Dashboard Pages
@@ -37,7 +36,10 @@ import HooksTestPage from '@/pages/HookTest';
 import TicketsPage from '@/pages/tickets/TicketsPage';
 import TicketDetailPage from '@/pages/tickets/TicketDetailPage';
 
+import { useAuth } from '@/hooks/use-auth';
+
 export default function router() {
+  const { user } = useAuth();
   return (
     <Routes>
       {/* Public Routes */}
@@ -72,12 +74,11 @@ export default function router() {
       </Route>
 
       {/* Shared routes for clients and agents */}
-      <Route element={<ProtectedRoute allowedRoles={['client', 'agent']} />}>
-      {/* <Route element={<ProtectedRoute allowedRoles={['client', 'agent', 'admin']} />}> */}
-        <Route element={<DashboardLayout />}>
+      <Route element={<ProtectedRoute allowedRoles={['client', 'agent', 'admin']} />}>
+        <Route element={ user?.role !== 'admin' ? <DashboardLayout /> : <AdminDashboardLayout />}>
           <Route path="/tickets" element={<TicketsPage />} />
           <Route path="/tickets/:id" element={<TicketDetailPage />} />
-          <Route path="/tickets2" element={<MyTicket />} />
+          {/* <Route path="/tickets2" element={<MyTicket />} /> */}
           <Route path="/new-ticket" element={<NewTicket />} />
           {/* add more routes dito */}
         </Route>

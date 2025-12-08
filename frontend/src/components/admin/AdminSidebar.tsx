@@ -1,7 +1,8 @@
-import { ChartColumn, Bolt, BookUser, Users, Home, Ticket } from "lucide-react";
+import { ChartColumn, Bolt, BookUser, Users, Home, Ticket, ShieldUser } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
@@ -11,9 +12,11 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { NavLink, useLocation } from "react-router-dom";
+import { useAuth } from "@/hooks/use-auth";
 
 export default function AppSidebar() {
   const location = useLocation();
+  const { user } = useAuth();
 
   return (
     <Sidebar>
@@ -123,6 +126,22 @@ export default function AppSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
+
+      <SidebarFooter>
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton className="h-auto cursor-default">
+              <div className="flex items-center gap-3">
+                <ShieldUser className="w-5 h-5" />
+                <div>
+                  <p>{user?.first_name} {user?.last_name}</p>
+                  <p className="text-xs">{user?.email}</p>
+                </div>
+              </div>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarFooter>
     </Sidebar>
   );
 }
