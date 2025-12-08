@@ -21,13 +21,13 @@ export function DataTableHeader<T>({
   getSortIcon,
 }: DataTableHeaderProps<T>) {
   return (
-    <TableHeader className='bg-gray-50'>
+    <TableHeader className='bg-purple-100'>
       <TableRow>
         {/* <TableHead className='w-12 p-4'>
           <Checkbox checked={allSelected} onCheckedChange={toggleAllRows} />
         </TableHead> */}
         {visibleColumns.map((column) => (
-          <TableHead key={String(column.key)} className='p-4'>
+          <TableHead key={String(column.key)} className='p-4 text-purple-900'>
             {column.sortable !== false ? (
               <button
                 onClick={() => handleSort(String(column.key))}

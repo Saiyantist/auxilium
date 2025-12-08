@@ -1,9 +1,9 @@
-// import type { User } from "./user";
+import type { User } from "./user";
 
 export interface Activity {
   id: number;
-  user_id: number;
-  // user?: User;
+  // user_id: number;
+  user?: User;
   ticket_id: number;
   action: string;
   metadata: any;

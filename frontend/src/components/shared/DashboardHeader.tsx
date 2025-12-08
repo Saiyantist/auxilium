@@ -18,7 +18,7 @@ export default function DashboardHeader() {
   return (
     <header
       aria-label="Dashboard navigation"
-      className="w-full fixed top-0 left-0 z-50 bg-gradient-to-r from-purple-400 to-purple-600 text-white drop-shadow-xl px-6 py-4"
+      className="w-full fixed top-0 left-0 z-30 bg-gradient-to-r from-purple-400 to-purple-600 text-white drop-shadow-xl px-6 py-4"
     >
       <div className="flex justify-between items-end">
         <div className="flex items-center gap-4">
