@@ -7,9 +7,9 @@ export interface Ticket {
   number: string;
   subject: string;
   description: string | null;
-  status: number;
-  priority: number;
-  severity: number;
+  status: string;
+  priority: string;
+  severity: string;
   ticket_type: number;
   category_id: number | null;
   project_id: number | null;

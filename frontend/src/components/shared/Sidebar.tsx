@@ -58,11 +58,11 @@ export default function AppSidebar() {
               <SidebarMenuItem>
                 <SidebarMenuButton
                   asChild
-                  isActive={location.pathname === "/my-ticket"}
+                  isActive={location.pathname === "/tickets"}
                 >
-                  <NavLink to="/my-ticket">
+                  <NavLink to="/tickets">
                     <Ticket className="w-5 h-5" />
-                    <span>My Ticket</span>
+                    <span>My Tickets</span>
                   </NavLink>
                 </SidebarMenuButton>
               </SidebarMenuItem>

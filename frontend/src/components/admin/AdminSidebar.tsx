@@ -41,15 +41,28 @@ export default function AppSidebar() {
                 </SidebarMenuButton>
               </SidebarMenuItem>
 
-              {/* Settings */}
+              {/* My Ticket */}
               <SidebarMenuItem>
                 <SidebarMenuButton
                   asChild
-                  isActive={location.pathname === "/settings"}
+                  isActive={location.pathname === "/all-tickets"}
                 >
-                  <NavLink to="/settings">
-                    <Bolt className="w-5 h-5" />
-                    <span>Settings</span>
+                  <NavLink to="/all-tickets">
+                    <Ticket className="w-5 h-5" />
+                    <span>All Tickets</span>
+                  </NavLink>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+
+              {/* Ticket Approval */}
+              <SidebarMenuItem>
+                <SidebarMenuButton
+                  asChild
+                  isActive={location.pathname === "/approval"}
+                >
+                  <NavLink to="/approval">
+                    <Ticket className="w-5 h-5" />
+                    <span>Ticket Approval</span>
                   </NavLink>
                 </SidebarMenuButton>
               </SidebarMenuItem>
@@ -68,7 +81,7 @@ export default function AppSidebar() {
               </SidebarMenuItem>
 
               {/* User Log History */}
-              <SidebarMenuItem>
+              {/* <SidebarMenuItem>
                 <SidebarMenuButton
                   asChild
                   isActive={location.pathname === "/user-history"}
@@ -78,20 +91,7 @@ export default function AppSidebar() {
                     <span>User Log History</span>
                   </NavLink>
                 </SidebarMenuButton>
-              </SidebarMenuItem>
-
-              {/* Ticket Approval */}
-              <SidebarMenuItem>
-                <SidebarMenuButton
-                  asChild
-                  isActive={location.pathname === "/approval"}
-                >
-                  <NavLink to="/approval">
-                    <Ticket className="w-5 h-5" />
-                    <span>Ticket Approval</span>
-                  </NavLink>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
+              </SidebarMenuItem> */}
 
               {/* Performance */}
               <SidebarMenuItem>
@@ -105,6 +105,20 @@ export default function AppSidebar() {
                   </NavLink>
                 </SidebarMenuButton>
               </SidebarMenuItem>
+
+              {/* Settings */}
+              <SidebarMenuItem>
+                <SidebarMenuButton
+                  asChild
+                  isActive={location.pathname === "/settings"}
+                >
+                  <NavLink to="/settings">
+                    <Bolt className="w-5 h-5" />
+                    <span>Settings</span>
+                  </NavLink>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>

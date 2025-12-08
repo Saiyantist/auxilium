@@ -212,6 +212,40 @@ def generate_comments_for_ticket(ticket, creator, assignee, agents)
   comments
 end
 
+def calculate_due_date(priority, status, created_time, closed_at)
+  sla_hours = {
+    urgent: 12..36,
+    high: 48..96,
+    medium: 96..168,
+    low: 168..240
+  }
+
+  priority_key = priority.to_sym
+  range = sla_hours[priority_key] || (96..168)
+  range_min, range_max = range.minmax
+  base_due_date = created_time + rand(range_min..range_max).hours
+  base_due_date = [base_due_date, created_time + 6.hours].max
+
+  case status
+  when :open
+    min_future = Time.current + rand(12..72).hours
+    base_due_date = [base_due_date, min_future].max
+  when :pending
+    min_future = Time.current + rand(6..48).hours
+    base_due_date = [base_due_date, min_future].max
+  when :on_hold
+    base_due_date += rand(48..96).hours
+  when :resolved, :closed
+    # Keep due date near resolution and avoid slipping far past closure
+    if closed_at
+      base_due_date = [base_due_date, closed_at - rand(6..24).hours].min
+      base_due_date = [base_due_date, created_time + 6.hours].max
+    end
+  end
+
+  base_due_date
+end
+
 ticket_templates.each_with_index do |template, index|
   creator = client_records.sample
   assignee = agent_records.sample
@@ -230,6 +264,9 @@ ticket_templates.each_with_index do |template, index|
     rand(1..5).days.ago
   end
   
+  closed_at = [:closed, :resolved].include?(template[:status]) ? created_time + rand(2..72).hours : nil
+  due_date = calculate_due_date(template[:priority], template[:status], created_time, closed_at)
+
   ticket = Ticket.create!(
     number: "TKT-#{(index + 1).to_s.rjust(5, '0')}",
     subject: template[:subject],
@@ -240,9 +277,10 @@ ticket_templates.each_with_index do |template, index|
     ticket_type: template[:ticket_type],
     creator_id: creator.id,
     assignee_id: assignee.id,
+    due_date: due_date,
     created_at: created_time,
     updated_at: created_time,
-    closed_at: [:closed, :resolved].include?(template[:status]) ? created_time + rand(2..72).hours : nil
+    closed_at: closed_at
   )
 
   # Create activities for ticket creation and assignment
