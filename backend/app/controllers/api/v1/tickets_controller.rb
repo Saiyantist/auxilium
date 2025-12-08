@@ -3,12 +3,12 @@ class Api::V1::TicketsController < ApplicationController
 
     def index
       @tickets = policy_scope(Ticket)
-      render json: @tickets
+      render json: @tickets.as_json(tickets_includes)
     end
     
     def show
       authorize @ticket
-      render json: @ticket
+      render json: @ticket.as_json(tickets_includes)
     end
 
     def create
@@ -54,5 +54,14 @@ class Api::V1::TicketsController < ApplicationController
   
     def ticket_params
       params.require(:ticket).permit(:subject, :description, :status, :priority, :assignee_id, :project_id, :category_id)
+    end
+
+    def tickets_includes
+      {
+        include: {
+          assignee: { only: %i[id first_name last_name email] },
+          creator:  { only: %i[id first_name last_name email] }
+        }
+      }
     end
 end

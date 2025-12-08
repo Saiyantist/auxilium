@@ -35,6 +35,7 @@ import AdminDashboardLayout from '@/layouts/AdminDashboardLayout';
 
 // Test Pages
 import HooksTestPage from '@/pages/HookTest';
+import TicketsPage from '@/pages/shared/TicketsPage';
 
 export default function router() {
   return (
@@ -72,8 +73,10 @@ export default function router() {
 
       {/* Shared routes for clients and agents */}
       <Route element={<ProtectedRoute allowedRoles={['client', 'agent']} />}>
+      {/* <Route element={<ProtectedRoute allowedRoles={['client', 'agent', 'admin']} />}> */}
         <Route element={<DashboardLayout />}>
-          <Route path="/my-ticket" element={<MyTicket />} />
+          <Route path="/tickets" element={<TicketsPage />} />
+          <Route path="/tickets2" element={<MyTicket />} />
           <Route path="/new-ticket" element={<NewTicket />} />
           {/* add more routes dito */}
         </Route>
@@ -90,6 +93,7 @@ export default function router() {
       <Route element={<ProtectedRoute allowedRoles={['admin']} />}>
         <Route element={<AdminDashboardLayout />}>
           <Route path="/admin-dashboard" element={<AdminDashboard />} />
+          <Route path="/all-tickets" element={<TicketsPage />} />
           <Route path="/approval" element={<Approval />} />
           <Route path="/performance" element={<Performance />} />
           <Route path="/user-history" element={<UserHistory />} />
