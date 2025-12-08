@@ -1,4 +1,3 @@
-// router.tsx (Updated)
 import { Routes, Route } from 'react-router-dom';
 
 /** Layouts */
@@ -35,7 +34,8 @@ import AdminDashboardLayout from '@/layouts/AdminDashboardLayout';
 
 // Test Pages
 import HooksTestPage from '@/pages/HookTest';
-import TicketsPage from '@/pages/shared/TicketsPage';
+import TicketsPage from '@/pages/tickets/TicketsPage';
+import TicketDetailPage from '@/pages/tickets/TicketDetailPage';
 
 export default function router() {
   return (
@@ -76,6 +76,7 @@ export default function router() {
       {/* <Route element={<ProtectedRoute allowedRoles={['client', 'agent', 'admin']} />}> */}
         <Route element={<DashboardLayout />}>
           <Route path="/tickets" element={<TicketsPage />} />
+          <Route path="/tickets/:id" element={<TicketDetailPage />} />
           <Route path="/tickets2" element={<MyTicket />} />
           <Route path="/new-ticket" element={<NewTicket />} />
           {/* add more routes dito */}
