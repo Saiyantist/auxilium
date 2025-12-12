@@ -31,11 +31,14 @@ export default function Dashboard() {
 
   return (
     <div className="p-6 space-y-8">
+      {/* Header */}
       <DashboardHeader role={user?.role} />
 
+      {/* Stats */}
       {user && isAgent(user?.role) ? ( <DashboardStatsAgent stats={stats}/>) :
                                         <DashboardStatsClient stats={stats} />}
 
+      {/* Recent Tickets */}
       <DashboardTicketList tickets={filteredTickets?.slice(0, 5) || []} />
 
     </div>

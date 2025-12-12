@@ -1,31 +1,25 @@
-import { Button } from "@/components/ui/button";
-import { isAgent, isClient } from '@/utils/role';
-import { useNavigate } from "react-router-dom";
+"use client"
+
+import { Button } from "@/components/ui/button"
+import { isAgent, isClient } from "@/utils/role"
+import { useNavigate } from "react-router-dom"
 
 export default function DashboardHeader({ role }: { role: string | undefined }) {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   return (
-    <div className="mb-6 flex items-center justify-between">
+    <div className="mb-6 flex items-center justify-between bg-gradient-to-r from-purple-50 to-purple-100 p-6 rounded-lg border border-purple-200">
       <div>
         {role && isClient(role) && (
           <>
-            <h1 className="text-3xl font-semibold">
-              My Support Dashboard
-            </h1>
-            <p className="text-muted-foreground">
-              Overview of your tickets and recent activity.
-            </p>
-          </>  
+            <h1 className="text-3xl font-semibold text-purple-900">My Support Dashboard</h1>
+            <p className="text-purple-700">Overview of your tickets and recent activity.</p>
+          </>
         )}
         {role && isAgent(role) && (
           <>
-            <h1 className="text-3xl font-semibold">
-              Agent Dashboard
-            </h1>
-            <p className="text-muted-foreground">
-              Overview of your assigned tickets and recent activity.
-            </p>
-          </>  
+            <h1 className="text-3xl font-semibold text-purple-900">Agent Dashboard</h1>
+            <p className="text-purple-700">Overview of your assigned tickets and recent activity.</p>
+          </>
         )}
       </div>
 
@@ -36,5 +30,5 @@ export default function DashboardHeader({ role }: { role: string | undefined }) 
         </Button>
       )}
     </div>
-  );
+  )
 }
