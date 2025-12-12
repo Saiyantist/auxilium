@@ -40,6 +40,7 @@ import { useAuth } from '@/hooks/use-auth';
 
 export default function router() {
   const { user } = useAuth();
+  
   return (
     <Routes>
       {/* Public Routes */}

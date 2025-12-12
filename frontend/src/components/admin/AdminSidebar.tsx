@@ -1,4 +1,4 @@
-import { ChartColumn, Bolt, BookUser, Users, Home, Ticket, ShieldUser } from "lucide-react";
+import { ChartColumn, Bolt, Users, Home, Ticket, ShieldUser } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,

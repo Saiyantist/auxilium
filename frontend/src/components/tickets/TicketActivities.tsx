@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import { useState } from "react"
 import type { Activity } from "@/types"
 import { Button } from "@/components/ui/button"
 import { ScrollArea } from "../ui/scroll-area"
