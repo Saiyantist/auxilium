@@ -21,23 +21,23 @@ export function DataTableHeader<T>({
   getSortIcon,
 }: DataTableHeaderProps<T>) {
   return (
-    <TableHeader className='bg-purple-100'>
+    <TableHeader className="bg-gradient-to-r from-purple-400 to-purple-500 [&_tr]:hover:bg-transparent">
       <TableRow>
         {/* <TableHead className='w-12 p-4'>
           <Checkbox checked={allSelected} onCheckedChange={toggleAllRows} />
         </TableHead> */}
         {visibleColumns.map((column) => (
-          <TableHead key={String(column.key)} className='p-4 text-purple-900'>
+          <TableHead key={String(column.key)} className="p-4 text-white">
             {column.sortable !== false ? (
               <button
                 onClick={() => handleSort(String(column.key))}
-                className='flex items-center hover:text-gray-900 font-medium'
+                className="flex items-center font-medium"
               >
                 {column.label}
                 {getSortIcon(String(column.key))}
               </button>
             ) : (
-              <span className='font-medium'>{column.label}</span>
+              <span className="font-medium">{column.label}</span>
             )}
           </TableHead>
         ))}

@@ -1,4 +1,4 @@
-import { ChartColumn, Bolt, BookUser, Users, Home, Ticket, ShieldUser } from "lucide-react";
+import { ChartColumn, Bolt, Users, Home, Ticket, ShieldUser } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -57,7 +57,7 @@ export default function AppSidebar() {
                 </SidebarMenuButton>
               </SidebarMenuItem>
 
-              {/* Ticket Approval */}
+              {/* Ticket Approval
               <SidebarMenuItem>
                 <SidebarMenuButton
                   asChild
@@ -68,7 +68,7 @@ export default function AppSidebar() {
                     <span>Ticket Approval</span>
                   </NavLink>
                 </SidebarMenuButton>
-              </SidebarMenuItem>
+              </SidebarMenuItem> */}
 
               {/* User Management*/}
               <SidebarMenuItem>
