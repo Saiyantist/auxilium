@@ -44,10 +44,10 @@ export default function AdminDashboard() {
         {/* Ticket Stats Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           {/* Total Tickets */}
-          <Card className="bg-white p-6 hover:shadow-lg transition-all duration-300 border-l-4 border-blue-500">
+          <Card className="bg-white p-6 hover:shadow-lg transition-all duration-300 border-l-4 border-gray-400">
             <div className="flex items-start justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-600 mb-1">Total Tickets</p>
+                <p className="text-sm font-medium text-black mb-1">Total Tickets</p>
                 <h3 className="text-3xl font-bold text-gray-900">{totalTickets}</h3>
               </div>
               <div className="p-3 bg-blue-100 rounded-lg">
@@ -62,7 +62,7 @@ export default function AdminDashboard() {
           </Card>
 
           {/* Solved */}
-          <Card className="bg-white p-6 hover:shadow-lg transition-all duration-300 border-l-4 border-green-500">
+          <Card className="bg-white p-6 hover:shadow-lg transition-all duration-300 border-l-4 border-gray-400">
             <div className="flex items-start justify-between">
               <div>
                 <p className="text-sm font-medium text-gray-600 mb-1">Solved Tickets</p>
@@ -81,23 +81,23 @@ export default function AdminDashboard() {
           </Card>
 
           {/* Awaiting Approval */}
-          <Card className="bg-white p-6 hover:shadow-lg transition-all duration-300 border-l-4 border-orange-500">
+          <Card className="bg-white p-6 hover:shadow-lg transition-all duration-300 border-l-4 border-gray-400">
             <div className="flex items-start justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-600 mb-1">Awaiting Approval</p>
+                <p className="text-sm font-medium text-black mb-1">Awaiting Approval</p>
                 <h3 className="text-3xl font-bold text-gray-900">{totalAwaiting}</h3>
               </div>
-              <div className="p-3 bg-orange-100 rounded-lg">
-                <AlertCircle className="w-6 h-6 text-orange-600" />
+              <div className="p-3 bg-gray-100 rounded-lg">
+                <AlertCircle className="w-6 h-6 text-red-600" />
               </div>
             </div>
-            <div className="mt-4 text-sm text-orange-600 font-medium">
+            <div className="mt-4 text-sm text-red-600 font-medium">
               Requires attention
             </div>
           </Card>
 
           {/* In Progress */}
-          <Card className="bg-white p-6 hover:shadow-lg transition-all duration-300 border-l-4 border-yellow-500">
+          <Card className="bg-white p-6 hover:shadow-lg transition-all duration-300 border-l-4 border-gray-400">
             <div className="flex items-start justify-between">
               <div>
                 <p className="text-sm font-medium text-gray-600 mb-1">In Progress</p>

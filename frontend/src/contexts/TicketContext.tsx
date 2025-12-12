@@ -2,7 +2,7 @@
 import { createContext, useContext, useState, type ReactNode } from "react";
 
 export type Priority = "Low" | "Medium" | "High";
-export type Status = "In Progress" | "On Hold" | "Closed" | "Pending Approval";
+export type Status = "In Progress" | "On Hold" | "Closed" | "Pending Approval"; // Consider adding "Resolved" if needed: | "Resolved"
 
 export interface Ticket {
   id: number;
@@ -27,6 +27,7 @@ interface TicketContextType {
   approveTicket: (id: number) => void;
   rejectTicket: (id: number) => void;
   assignTicket: (id: number, assignee: string) => void;
+  resolveTicket: (id: number) => void; // Added for completeness (sets to "Closed" or "Resolved" if type updated)
   // Optional: restore deleted ticket later
   restoreTicket?: (id: number) => void;
 }
@@ -149,6 +150,15 @@ export function TicketProvider({ children }: { children: ReactNode }) {
     );
   };
 
+  // Added: Resolve a ticket (update Status type to include "Resolved" if distinct from "Closed")
+  const resolveTicket = (id: number) => {
+    setTickets((prev) =>
+      prev.map((t) =>
+        t.id === id ? { ...t, status: "Closed" as Status } : t // Or "Resolved" if added to type
+      )
+    );
+  };
+
   // Optional: restore a soft-deleted ticket
   const restoreTicket = (id: number) => {
     setTickets((prev) =>
@@ -164,6 +174,7 @@ export function TicketProvider({ children }: { children: ReactNode }) {
         approveTicket,
         rejectTicket,
         assignTicket,
+        resolveTicket,
         restoreTicket,
       }}
     >
