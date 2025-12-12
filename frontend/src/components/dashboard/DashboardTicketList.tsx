@@ -1,9 +1,11 @@
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useNavigate } from "react-router-dom";
+import { getBadgeProps } from "@/utils/badge";
 
 export default function DashboardTicketList({ tickets }: { tickets: any }) {
   const navigate = useNavigate();
+  
   return (
     <Card className="mt-6">
       <CardHeader>
@@ -11,7 +13,9 @@ export default function DashboardTicketList({ tickets }: { tickets: any }) {
       </CardHeader>
       <CardContent>
         <div className="divide-y">
-          {tickets.map((t: any) => (
+          {tickets.map((t: any) => {
+            const { label: statusLabel, className: statusClass, variant: statusVariant } = getBadgeProps('status', t.status);
+            return (
             <div
               key={t.id}
               className="py-3 flex justify-between items-center hover:bg-muted/50 cursor-pointer"
@@ -24,9 +28,10 @@ export default function DashboardTicketList({ tickets }: { tickets: any }) {
                 </div>
               </div>
 
-              <Badge variant="secondary">{t.status}</Badge>
+              <Badge variant={statusVariant} className={statusClass}>{statusLabel}</Badge>
             </div>
-          ))}
+          );
+          })}
         </div>
       </CardContent>
     </Card>

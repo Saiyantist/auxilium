@@ -37,7 +37,6 @@ import TicketsPage from '@/pages/tickets/TicketsPage';
 import TicketDetailPage from '@/pages/tickets/TicketDetailPage';
 
 import { useAuth } from '@/hooks/use-auth';
-import { isAdmin, isClient, isAgent } from '@/utils/role';
 
 export default function router() {
   const { user } = useAuth();
