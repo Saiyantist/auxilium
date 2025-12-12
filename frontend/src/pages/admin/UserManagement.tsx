@@ -3,7 +3,7 @@ import { Card } from '@/components/ui/card';
 import { ArrowLeft, Search } from 'lucide-react';
 import agentImage from '@/assets/agent.png';
 import userImage from '@/assets/user.png';
-import { MOCK_AGENTS } from './Approval';
+// import { MOCK_AGENTS } from './Approval';
 
 // Static mock users (unchanged)
 interface User {
@@ -36,11 +36,11 @@ export default function UserManagement() {
     user.email?.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  // Filter agents based on search (now using imported MOCK_AGENTS)
-  const filteredAgents = MOCK_AGENTS.filter(agent =>
-    agent.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    agent.email?.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  // // Filter agents based on search (now using imported MOCK_AGENTS)
+  // const filteredAgents = MOCK_AGENTS.filter(agent =>
+  //   agent.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+  //   agent.email?.toLowerCase().includes(searchQuery.toLowerCase())
+  // );
 
   // Cards View
   if (viewMode === 'cards') {
@@ -262,7 +262,7 @@ export default function UserManagement() {
                     </th>
                   </tr>
                 </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
+                {/* <tbody className="bg-white divide-y divide-gray-200">
                   {filteredAgents.map((agent, index) => (
                     <tr key={agent.id} className={index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
@@ -290,17 +290,17 @@ export default function UserManagement() {
                       </td>
                     </tr>
                   ))}
-                </tbody>
+                </tbody> */}
               </table>
             </div>
 
-            {/* Footer */}
+            {/* Footer
             <div className="px-6 py-4 border-t border-gray-200">
               <div className="text-sm text-gray-600">
                 Showing {filteredAgents.length} of {MOCK_AGENTS.length} agents
                 {searchQuery && <span className="ml-1">(filtered)</span>}
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
