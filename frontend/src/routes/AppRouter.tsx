@@ -23,7 +23,7 @@ import Contact from '@/pages/Contact';
 import NewTicket from '@/pages/user/NewTicket';
 
 //Admin Dashboard Pages
-import Approval from '@/pages/admin/Approval';
+// import Approval from '@/pages/admin/Approval';
 import Performance from '@/pages/admin/Performance';
 import Settings from '@/pages/admin/Settings';
 import UserManagement from '@/pages/admin/UserManagement';
@@ -97,7 +97,7 @@ export default function router() {
         <Route element={<AdminDashboardLayout />}>
           <Route path="/admin-dashboard" element={<AdminDashboard />} />
           <Route path="/all-tickets" element={<TicketsPage />} />
-          <Route path="/approval" element={<Approval />} />
+          {/* <Route path="/approval" element={<Approval />} /> */}
           <Route path="/performance" element={<Performance />} />
           <Route path="/user-history" element={<UserHistory />} />
           <Route path="/user-management" element={<UserManagement />} />
