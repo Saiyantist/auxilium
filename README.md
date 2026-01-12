@@ -25,13 +25,24 @@ cd auxilium
 
 ### 3️⃣ Run
 1. Frontend
+   - Setup `.env` in the frontend directory, then input this:
+   ```bash
+    VITE_API_BASE_URL=http://localhost:3000/api/v1
+   ```
    - Install dependencies, then run server.
    ```bash
     cd frontend && npm install
     npm run dev
    ```
 
-2. Backend
+3. Backend
+   - Setup `.env` in the backend directory, then input this:
+   ```bash
+    DB_NAME=auxilium_development
+    DB_HOST=localhost
+    DB_USERNAME=root
+    DB_PASSWORD=mysql
+   ```
    - Install dependencies.
    ```bash
     cd backend
