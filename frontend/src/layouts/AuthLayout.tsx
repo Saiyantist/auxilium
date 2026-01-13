@@ -1,12 +1,15 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 
 export default function AuthLayout() {
+  const location = useLocation();
+  const bgClass =
+    location.pathname === "/login"
+      ? "bg-gradient-to-br from-purple-200 via-indigo-200 to-blue-200"
+      : "bg-gradient-to-br from-blue-200 via-purple-200 to-indigo-200";
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500">
-      {/* <div className="w-full max-w-lg h-[80vh] bg-white/90 backdrop-blur-md rounded-2xl shadow-xl p-8"> */}
-      <div className="w-full max-w-lg bg-white/90 backdrop-blur-md rounded-2xl shadow-xl p-8">
-        <Outlet />
-      </div>
+    <div className={`min-h-screen flex items-center justify-center ${bgClass}`}>
+      <Outlet />
     </div>
   );
 }
