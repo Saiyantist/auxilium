@@ -1,14 +1,14 @@
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { Rocket, Target, Heart, Users, Code, Zap } from "lucide-react";
+import { Rocket, Target, Heart, Users, Layers, Zap } from "lucide-react";
 
 export default function About() {
   return (
     <div className="bg-gradient-to-br from-blue-50 to-purple-50">
       
       {/* Hero Section */}
-      <div className="container mx-auto py-20">
+      <div className="container mx-auto py-20 px-6">
         <div className="py-8">
           <div className="text-center space-y-6">
             <h1 className="text-5xl md:text-6xl font-bold text-gray-900">
@@ -21,157 +21,192 @@ export default function About() {
         </div>
 
         {/* Mission & Vision */}
-        <div className="container mx-auto px-8 py-4">
-          <div className="grid md:grid-cols-2 gap-20">
-            
-            {/* Mission */}
-            <Card className="p-8 bg-gradient-to-br from-purple-400 to-purple-600 text-white hover:shadow-2xl transition-all">
-              <div className="flex items-center gap-4 mb-4">
-                <div className="bg-white/20 rounded-full p-3">
-                  <Target className="w-8 h-8" />
-                </div>
-                <h2 className="text-3xl font-bold">Our Mission</h2>
-              </div>
-              <p className="text-lg leading-relaxed">
-                To revolutionize customer support by providing an intuitive, powerful, and 
-                efficient helpdesk system that enables teams to resolve issues faster and 
-                deliver outstanding service experiences.
-              </p>
-            </Card>
-
-            {/* Vision */}
-            <Card className="p-8 bg-gradient-to-br from-indigo-400 to-indigo-600 text-white hover:shadow-2xl transition-all">
-              <div className="flex items-center gap-4 mb-4">
-                <div className="bg-white/20 rounded-full p-3">
-                  <Rocket className="w-8 h-8" />
-                </div>
-                <h2 className="text-3xl font-bold">Our Vision</h2>
-              </div>
-              <p className="text-lg leading-relaxed">
-                To become the leading helpdesk solution that empowers businesses of all sizes 
-                to build stronger relationships with their customers through seamless, 
-                technology-driven support.
-              </p>
-            </Card>
-          </div>
+<div className="container mx-auto px-8 py-4">
+  <div className="grid md:grid-cols-2 gap-20">
+    
+    {/* Mission */}
+    <Card className="p-8 bg-gradient-to-br from-purple-400 to-purple-600 text-white hover:shadow-2xl transition-all">
+      <div className="flex items-center gap-4 mb-4">
+        <div className="rounded-full p-3">
+          <Target className="w-8 h-8" />
         </div>
+        <h2 className="text-3xl font-bold">Our Mission</h2>
+      </div>
+      <p className="text-lg leading-relaxed">
+        Our goal is simple: make customer support easier.
+        Auxilium helps teams handle tickets faster, stay organized,
+        and solve problems without confusion or stress.
+      </p>
+    </Card>
+
+    {/* Vision */}
+    <Card className="p-8 bg-gradient-to-br from-indigo-400 to-indigo-600 text-white hover:shadow-2xl transition-all">
+      <div className="flex items-center gap-4 mb-4">
+        <div className="bg-white/20 rounded-full p-3">
+          <Rocket className="w-8 h-8" />
+        </div>
+        <h2 className="text-3xl font-bold">Our Vision</h2>
+      </div>
+      <p className="text-lg leading-relaxed">
+        We want every business to have a support system that just works.
+        A system that is easy to use, looks modern,
+        and helps teams give better help to their customers.
+      </p>
+    </Card>
+
+  </div>
+</div>
       </div>
 
       {/* Core Values */}
-      <div className="bg-white py-20">
-        <div className="container mx-auto px-6">
-          <h2 className="text-4xl font-bold text-center mb-4 text-gray-900">
-            Our Core Values
-          </h2>
-          <p className="text-center text-gray-600 mb-12">
-            The principles that guide everything we do at Auxilium
-          </p>
-          
-          <div className="grid md:grid-cols-3 gap-16">
-            
-            {/* Value 1 */}
-            <Card className="p-8 text-center hover:shadow-xl transition-shadow border-t-4 border-purple-500">
-              <div className="bg-purple-100 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4">
-                <Heart className="w-10 h-10 text-purple-600" />
-              </div>
-              <h3 className="text-2xl font-semibold mb-3 text-gray-800">Customer First</h3>
-              <p className="text-gray-600">
-                We put our customers at the heart of everything we build. Their success is our success.
-              </p>
-            </Card>
-
-            {/* Value 2 */}
-            <Card className="p-8 text-center hover:shadow-xl transition-shadow border-t-4 border-fuchsia-500">
-              <div className="bg-fuchsia-100 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4">
-                <Zap className="w-10 h-10 text-fuchsia-600" />
-              </div>
-              <h3 className="text-2xl font-semibold mb-3 text-gray-800">Innovation</h3>
-              <p className="text-gray-600">
-                We constantly push boundaries with cutting-edge technology to solve real problems.
-              </p>
-            </Card>
-
-            {/* Value 3 */}
-            <Card className="p-8 text-center hover:shadow-xl transition-shadow border-t-4 border-indigo-500">
-              <div className="bg-indigo-100 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4">
-                <Users className="w-10 h-10 text-indigo-600" />
-              </div>
-              <h3 className="text-2xl font-semibold mb-3 text-gray-800">Collaboration</h3>
-              <p className="text-gray-600">
-                We believe great solutions come from teamwork, transparency, and open communication.
-              </p>
-            </Card>
-          </div>
+<div className="py-8 mb-20">
+  <div className="container mx-auto px-16">
+    <h2 className="text-4xl font-bold text-center mb-4 text-gray-900">
+      Our Core Values
+    </h2>
+    <p className="text-center text-gray-600 mb-12">
+      These values guide how we build and improve Auxilium every day
+    </p>
+    
+    <div className="grid md:grid-cols-3 gap-10">
+      
+      {/* Value 1 */}
+      <Card className="p-8 text-center hover:shadow-xl transition-shadow border-t-4 border-purple-500">
+        <div className="bg-purple-100 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4">
+          <Heart className="w-10 h-10 text-purple-600" />
         </div>
-      </div>
+        <h3 className="text-2xl font-semibold mb-3 text-gray-800">
+          Customer First
+        </h3>
+        <p className="text-gray-600">
+          We design the system around real users.
+          Every feature is built to make support work easier for both customers and teams.
+        </p>
+      </Card>
 
-      {/* Technology Stack */}
-      <div className="px-7 bg-gradient-to-r from-purple-400 to-indigo-600 py-20 text-white">
-        <div className="container mx-auto ">
-          <div className="flex items-center justify-center gap-4 mb-8">
-            <Code className="w-12 h-12 text-purple-400" />
-            <h2 className="text-4xl font-bold text-center">Built With Modern Tech</h2>
-          </div>
-          <p className="text-center text-gray-300 mb-12 text-lg">
-            Auxilium is powered by the latest web technologies to ensure speed, 
-            reliability, and an exceptional user experience.
-          </p>
-          
-          <div className="grid md:grid-cols-2 gap-6">
-            {/* Frontend */}
-            <Card className="bg-gray-800/50 border-gray-700 p-6">
-              <h3 className="text-2xl font-semibold mb-4 text-violet-400">Frontend</h3>
-              <ul className="space-y-3">
-                <li className="flex items-center gap-3">
-                  <div className="w-2 h-2 bg-purple-400 rounded-full"></div>
-                  <span className="text-gray-300"><strong>Vite</strong> - Lightning-fast build tool</span>
-                </li>
-                <li className="flex items-center gap-3">
-                  <div className="w-2 h-2 bg-purple-400 rounded-full"></div>
-                  <span className="text-gray-300"><strong>React</strong> - Component-based UI library</span>
-                </li>
-                <li className="flex items-center gap-3">
-                  <div className="w-2 h-2 bg-purple-400 rounded-full"></div>
-                  <span className="text-gray-300"><strong>TypeScript</strong> - Type-safe development for predictable</span>
-                </li>
-                <li className="flex items-center gap-3">
-                  <div className="w-2 h-2 bg-purple-400 rounded-full"></div>
-                  <span className="text-gray-300"><strong>shadcn/ui</strong> - Beautiful components</span>
-                </li>
-              </ul>
-            </Card>
-
-            {/* Backend */}
-            <Card className="bg-gray-800/50 border-gray-700 p-6">
-              <h3 className="text-2xl font-semibold mb-4 text-rose-400">Backend</h3>
-              <ul className="space-y-3">
-                <li className="flex items-center gap-3">
-                  <div className="w-2 h-2 bg-pink-400 rounded-full"></div>
-                  <span className="text-gray-300"><strong>Ruby on Rails</strong> - Robust API framework</span>
-                </li>
-                <li className="flex items-center gap-3">
-                  <div className="w-2 h-2 bg-pink-400 rounded-full"></div>
-                  <span className="text-gray-300"><strong>RESTful API</strong> - Scalable architecture</span>
-                </li>
-                <li className="flex items-center gap-3">
-                  <div className="w-2 h-2 bg-pink-400 rounded-full"></div>
-                  <span className="text-gray-300"><strong>MySQL</strong> - Reliable database</span>
-                </li>
-                <li className="flex items-center gap-3">
-                  <div className="w-2 h-2 bg-pink-400 rounded-full"></div>
-                  <span className="text-gray-300"><strong>Authentication</strong> - Devise + JWT for secure user management</span>
-                </li>
-              </ul>
-            </Card>
-          </div>
+      {/* Value 2 */}
+      <Card className="p-8 text-center hover:shadow-xl transition-shadow border-t-4 border-fuchsia-500">
+        <div className="bg-fuchsia-100 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4">
+          <Zap className="w-10 h-10 text-fuchsia-600" />
         </div>
-      </div>
+        <h3 className="text-2xl font-semibold mb-3 text-gray-800">
+          Simple Innovation
+        </h3>
+        <p className="text-gray-600">
+          We improve how help desks work by keeping things modern,
+          but always simple and easy to understand.
+        </p>
+      </Card>
+
+      {/* Value 3 */}
+      <Card className="p-8 text-center hover:shadow-xl transition-shadow border-t-4 border-indigo-500">
+        <div className="bg-indigo-100 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4">
+          <Users className="w-10 h-10 text-indigo-600" />
+        </div>
+        <h3 className="text-2xl font-semibold mb-3 text-gray-800">
+          Teamwork
+        </h3>
+        <p className="text-gray-600">
+          Auxilium supports teamwork by helping clients, agents,
+          and admins communicate clearly and work together smoothly.
+        </p>
+      </Card>
+
+    </div>
+  </div>
+</div>
+
+
+      {/* System Capabilities */}
+<div className="px-8 bg-gradient-to-r from-purple-400 to-indigo-600 py-20 text-white">
+  <div className="container mx-auto mt-14 mb-16">
+    <div className="flex items-center justify-center gap-4 mb-8">
+      <Layers className="w-12 h-12 text-purple-300" />
+      <h2 className="text-4xl font-bold text-center">
+        Built for Everyday Support
+      </h2>
+    </div>
+
+    <p className="text-center text-gray-200 mb-12 text-lg max-w-3xl mx-auto">
+      Auxilium provides all the essential tools a modern help desk needs — 
+      designed to be simple for users, efficient for agents, and powerful for administrators.
+    </p>
+
+    <div className="grid md:grid-cols-3 gap-6">
+      
+      {/* Client Features */}
+      <Card className="bg-gray-800/50 border-gray-700 p-6">
+        <h3 className="text-2xl font-semibold mb-4 text-violet-300">
+          For Clients
+        </h3>
+        <ul className="space-y-3 text-gray-300">
+          <li className="flex items-start gap-3">
+            <div className="w-2 h-2 bg-purple-400 rounded-full mt-2"></div>
+            <span>Submit support requests through a clean and simple form</span>
+          </li>
+          <li className="flex items-start gap-3">
+            <div className="w-2 h-2 bg-purple-400 rounded-full mt-2"></div>
+            <span>Track ticket status and updates in real time</span>
+          </li>
+          <li className="flex items-start gap-3">
+            <div className="w-2 h-2 bg-purple-400 rounded-full mt-2"></div>
+            <span>Communicate directly with support agents</span>
+          </li>
+        </ul>
+      </Card>
+
+      {/* Agent Features */}
+      <Card className="bg-gray-800/50 border-gray-700 p-6">
+        <h3 className="text-2xl font-semibold mb-4 text-rose-300">
+          For Agents
+        </h3>
+        <ul className="space-y-3 text-gray-300">
+          <li className="flex items-start gap-3">
+            <div className="w-2 h-2 bg-pink-400 rounded-full mt-2"></div>
+            <span>View, manage, and respond to assigned tickets</span>
+          </li>
+          <li className="flex items-start gap-3">
+            <div className="w-2 h-2 bg-pink-400 rounded-full mt-2"></div>
+            <span>Update ticket status and resolution details</span>
+          </li>
+          <li className="flex items-start gap-3">
+            <div className="w-2 h-2 bg-pink-400 rounded-full mt-2"></div>
+            <span>Collaborate internally to resolve issues faster</span>
+          </li>
+        </ul>
+      </Card>
+
+      {/* Admin Features */}
+      <Card className="bg-gray-800/50 border-gray-700 p-6">
+        <h3 className="text-2xl font-semibold mb-4 text-indigo-300">
+          For Administrators
+        </h3>
+        <ul className="space-y-3 text-gray-300">
+          <li className="flex items-start gap-3">
+            <div className="w-2 h-2 bg-indigo-400 rounded-full mt-2"></div>
+            <span>Manage users, roles, and system access</span>
+          </li>
+          <li className="flex items-start gap-3">
+            <div className="w-2 h-2 bg-indigo-400 rounded-full mt-2"></div>
+            <span>Configure workflows and ticket behavior</span>
+          </li>
+          <li className="flex items-start gap-3">
+            <div className="w-2 h-2 bg-indigo-400 rounded-full mt-2"></div>
+            <span>Monitor system activity and overall performance</span>
+          </li>
+        </ul>
+      </Card>
+
+    </div>
+  </div>
+</div>
+
 
       {/* Our Story */}
-      <div className="container mx-auto py-20">
+      <div className="container mx-auto mt-6 py-20">
         <div>
-          <h2 className="text-4xl font-bold text-center mb-8 text-gray-900">Our Story</h2>
-          <Card className="p-8 md:p-12 bg-gradient-to-br from-fuchsia-200 to-fuchsia-400 hover:bg-gradient-to-r border-none text-white">
+          <h2 className="text-4xl font-bold text-center mb-14 text-gray-900">Our Story</h2>
+          <Card className="p-8 max-w-6xl mx-auto mt-20 text-gray-800 hover:shadow-2xl transition-all">
             <p className="text-lg text-gray-700 leading-relaxed mb-6">
               Auxilium was born from a simple observation: customer support teams were struggling 
               with outdated, complicated helpdesk systems that slowed them down instead of helping them.

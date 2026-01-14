@@ -10,7 +10,6 @@ import {
   CardContent,
   CardFooter,
 } from '@/components/ui/card';
-// import { Facebook, Chrome, Twitter } from "lucide-react";
 import { useAuth } from '@/hooks/use-auth';
 import { ChevronLeft } from 'lucide-react';
 import { getDashboardRoute } from '@/utils/routing';
@@ -40,84 +39,88 @@ export default function Login() {
   };
 
   return (
-    <div className="h-full">
-      <Card className="h-full w-full p-5 shadow-2xl flex flex-col overflow-hidden">
-        <CardHeader className="p-2">
-          <div className="absolute cursor-pointer rounded-full hover:bg-accent p-1">
-            <Link to="/">
-              <ChevronLeft size={32} />
-            </Link>
+    <div className="min-h-screen flex items-center justify-center px-4 py-12">
+      <Card className="w-full max-w-3xl overflow-hidden shadow-2xl border-0">
+        <div className="grid md:grid-cols-2">
+
+          {/* LEFT PANEL */}
+          <div className="hidden md:flex flex-col justify-center bg-gradient-to-br from-purple-600 to-indigo-600 text-white p-10">
+            <h2 className="text-3xl font-bold mb-4">
+              Welcome to Auxilium
+            </h2>
+            <p className="text-white/90 leading-relaxed">
+              Manage tickets, track progress, and resolve issues faster with
+              all in one clean dashboard.
+            </p>
           </div>
-          <CardTitle>
-            <h2 className="text-3xl font-bold text-center mb-2 text-gray-800">Login</h2>
-          </CardTitle>
-          <CardDescription className="text-center">
-            Enter your email and password to login.
-          </CardDescription>
-        </CardHeader>
 
-        <CardContent className="p-2 flex-1">
-          <form onSubmit={handleLogin} className="space-y-6">
-            <Input
-              type="email"
-              placeholder="Enter your email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-            <Input
-              type="password"
-              placeholder="Enter your password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-
-            {/* <div className="text-right">
-              <Link
-              to="/forgot-password"
-                className="text-sm text-purple-600 hover:underline"
-              >
-                Forgot password?
-              </Link>
-            </div> */}
-            <Button
-              type="submit"
-              className="w-full bg-gradient-to-r from-blue-500 to-purple-500 text-white font-semibold rounded-full hover:opacity-90 transition"
-              disabled={loading}
+          {/* RIGHT PANEL */}
+          <div className="relative p-10 bg-white">
+            <Link
+              to="/"
+              className="absolute left-6 top-6 rounded-full p-2 hover:bg-gray-100 transition"
             >
-              {loading ? 'Signing In...' : 'LOGIN'}
-            </Button>
-
-            {error && (
-              <p className="bg-red-50 border border-red-200 rounded-md p-2 text-red-500 text-sm mb-4 text-center">
-                {error}
-              </p>
-            )}
-          </form>
-        </CardContent>
-
-        <CardFooter className="p-2 flex-col gap-2">
-          {/* <div className="text-center my-4 text-gray-600">Or Sign in using</div>
-          <div className="flex justify-center gap-4">
-            <Button variant="outline" className="rounded-full p-2">
-              <Facebook className="w-5 h-5 text-blue-600" />
-            </Button>
-            <Button variant="outline" className="rounded-full p-2">
-              <Twitter className="w-5 h-5 text-sky-400" />
-            </Button>
-            <Button variant="outline" className="rounded-full p-2">
-              <Chrome className="w-5 h-5 text-red-600" />
-            </Button>
-          </div> */}
-
-          <p className="text-center text-sm text-gray-600">
-            Don’t have an account?{' '}
-            <Link to="/register" className="text-purple-600 hover:underline font-medium">
-              Sign up
+              <ChevronLeft size={20} />
             </Link>
-          </p>
-        </CardFooter>
+
+            <CardHeader className="px-0 pt-6 pb-8 space-y-2">
+              <CardTitle className="text-3xl font-bold text-gray-900">
+                Sign In
+              </CardTitle>
+              <CardDescription className="text-gray-600">
+                Enter your credentials to continue
+              </CardDescription>
+            </CardHeader>
+
+            <CardContent className="px-0">
+              <form onSubmit={handleLogin} className="space-y-5">
+                <Input
+                  type="email"
+                  placeholder="you@example.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  className="h-11 rounded-lg"
+                />
+
+                <Input
+                  type="password"
+                  placeholder="••••••••"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  className="h-11 rounded-lg"
+                />
+
+                {error && (
+                  <div className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600">
+                    {error}
+                  </div>
+                )}
+
+                <Button
+                  type="submit"
+                  disabled={loading}
+                  className="w-full h-11 rounded-lg bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-semibold hover:opacity-90 transition"
+                >
+                  {loading ? 'Signing in…' : 'Sign In'}
+                </Button>
+              </form>
+            </CardContent>
+
+            <CardFooter className="px-0 pt-6">
+              <p className="text-sm text-gray-600">
+                Don’t have an account?{' '}
+                <Link
+                  to="/register"
+                  className="font-medium text-purple-600 hover:underline"
+                >
+                  Create one
+                </Link>
+              </p>
+            </CardFooter>
+          </div>
+        </div>
       </Card>
     </div>
   );

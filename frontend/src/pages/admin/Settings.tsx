@@ -9,13 +9,10 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Bolt ,
   Globe,
-  Mail,
   Bell,
   Users,
-  Palette,
   Save,
   Ticket,
-  Key
 } from "lucide-react";
 import { type Priority, type Status } from "@/contexts/TicketContext"; // Import types for consistency
 
@@ -41,13 +38,6 @@ export default function Settings() {
   const [emailNotifications, setEmailNotifications] = useState(true);
   const [smsNotifications, setSmsNotifications] = useState(false);
   const [notificationThreshold, setNotificationThreshold] = useState(5); // e.g., notify after X unresolved tickets
-
-  // Integration Settings State
-  const [apiKey, setApiKey] = useState('');
-  const [webhookUrl, setWebhookUrl] = useState('');
-
-  // Appearance Settings State
-  const [theme, setTheme] = useState('light');
 
   const handleSave = (section: string) => {
     // Simulate save (replace with API call)
@@ -93,8 +83,6 @@ export default function Settings() {
             <TabsTrigger value="tickets">Tickets</TabsTrigger>
             <TabsTrigger value="users">Users</TabsTrigger>
             <TabsTrigger value="notifications">Notifications</TabsTrigger>
-            <TabsTrigger value="integrations">Integrations</TabsTrigger>
-            <TabsTrigger value="appearance">Appearance</TabsTrigger>
           </TabsList>
 
           {/* General Settings */}
@@ -294,63 +282,6 @@ export default function Settings() {
                 <Button onClick={() => handleSave('Notifications')} className="flex items-center gap-2">
                   <Save className="w-4 h-4" />
                   Save Notification Settings
-                </Button>
-              </CardContent>
-            </Card>
-          </TabsContent>
-
-          {/* Integration Settings */}
-          <TabsContent value="integrations">
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Key className="w-5 h-5" />
-                  Integration Settings
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="apiKey">API Key</Label>
-                  <Input id="apiKey" value={apiKey} onChange={(e) => setApiKey(e.target.value)} placeholder="Enter API key" />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="webhookUrl">Webhook URL</Label>
-                  <Input id="webhookUrl" value={webhookUrl} onChange={(e) => setWebhookUrl(e.target.value)} placeholder="Enter webhook URL" />
-                </div>
-                <Button onClick={() => handleSave('Integrations')} className="flex items-center gap-2">
-                  <Save className="w-4 h-4" />
-                  Save Integration Settings
-                </Button>
-              </CardContent>
-            </Card>
-          </TabsContent>
-
-          {/* Appearance Settings */}
-          <TabsContent value="appearance">
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Palette className="w-5 h-5" />
-                  Appearance Settings
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="space-y-2">
-                  <Label>Theme</Label>
-                  <Select value={theme} onValueChange={setTheme}>
-                    <SelectTrigger>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="light">Light</SelectItem>
-                      <SelectItem value="dark">Dark</SelectItem>
-                      <SelectItem value="system">System</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <Button onClick={() => handleSave('Appearance')} className="flex items-center gap-2">
-                  <Save className="w-4 h-4" />
-                  Save Appearance Settings
                 </Button>
               </CardContent>
             </Card>
