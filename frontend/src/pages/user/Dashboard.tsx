@@ -15,10 +15,12 @@ export default function Dashboard() {
     if (user && isClient(user.role)) return t.creator_id === user.id;
 
     if (user && isAgent(user.role))
-      return t.assignee_id === user.id || !t.assignee_id;
+      return t.assignee_id === user.id;
 
     return [];
   });
+
+  const recentTickets = filteredTickets?.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()).slice(0, 5) || [];
 
   // Compute stats
   const stats = {
@@ -39,7 +41,7 @@ export default function Dashboard() {
                                         <DashboardStatsClient stats={stats} />}
 
       {/* Recent Tickets */}
-      <DashboardTicketList tickets={filteredTickets?.slice(0, 5) || []} />
+      <DashboardTicketList tickets={recentTickets} />
 
     </div>
   );

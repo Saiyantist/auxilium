@@ -7,7 +7,7 @@ export default function Home() {
   return (
     /* dashboard layout: main viewport & scrolling */
     <div className="min-h-screen bg-gradient-to-br from-purple-500 via-pink-300 to-indigo-500 overflow-hidden">
-      <div className="h-screen overflow-y-auto">
+      {/* <div className="h-screen overflow-y-auto"> */}
 
         {/* ================= HERO SECTION ================= */}
         <section className="pt-20 pb-24">
@@ -245,7 +245,7 @@ export default function Home() {
   </div>
 </section>
 
-      </div>
+      {/* </div> */}
     </div>
   );
 }

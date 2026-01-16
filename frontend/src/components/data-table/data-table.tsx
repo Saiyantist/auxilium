@@ -203,7 +203,7 @@ export function DataTable<T extends { id: string | number }>({
         </div>
       )}
 
-      <div className='rounded-md border bg-white'>
+      <div className='rounded-md border bg-white shadow'>
         <Table>
           <DataTableHeader<T>
             visibleColumns={visibleColumns}
