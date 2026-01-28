@@ -66,15 +66,21 @@ class Users::RegistrationsController < Devise::RegistrationsController
     build_resource(sign_up_params)
 
     if resource.save
-      # Generate a JWT for the new user (so frontend can be logged in immediately if desired)
-      # Warden::JWTAuth::UserEncoder.call returns [token, payload]
       token = Warden::JWTAuth::UserEncoder.new.call(resource, :user, nil)[0]
+
+      cookies[:access_token] = {
+        value: token,
+        httponly: true,
+        secure: Rails.env.production?,
+        same_site: Rails.env.production? ? :none : :lax
+      }
 
       render json: {
         id: resource.id,
+        first_name: resource.first_name,
+        last_name: resource.last_name,
         email: resource.email,
-        role: resource.respond_to?(:role) ? resource.role : nil,
-        token: token
+        role: resource.role
       }, status: :created
     else
       clean_up_passwords resource

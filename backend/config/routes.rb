@@ -20,6 +20,9 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       get '/healthz', to: proc { [200, {}, ['OK']] }
+      get "/me", to: "me#show"
+      post "/login", to: "users/sessions#create"
+      delete "/logout", to: "users/sessions#destroy"
 
       # Setup Action Cable
       mount ActionCable.server => '/cable'

@@ -28,17 +28,22 @@ class Users::SessionsController < Devise::SessionsController
 
   private
   def respond_with(resource, _opts = {})
-    render json: {
-      id: resource.id,
-      first_name: resource.first_name,
-      last_name: resource.last_name,
-      email: resource.email,
-      role: resource.role,
-      token: request.env['warden-jwt_auth.token']
-    }, status: :ok
+    token = request.env["warden-jwt_auth.token"]
+
+    if token.present?
+      cookies[:access_token] = {
+        value: token,
+        httponly: true,
+        secure: Rails.env.production?,
+        same_site: Rails.env.production? ? :none : :lax
+      }
+    end
+
+    render json: { success: true }, status: :ok
   end
 
   def respond_to_on_destroy
+    cookies.delete(:access_token)
     head :no_content
   end
 end

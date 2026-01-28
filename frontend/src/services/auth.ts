@@ -1,16 +1,16 @@
 import API from "./api";
 import type { User } from "@/types"; 
 
-export interface AuthResponse {
-  user: User;
-  token: string;
+export async function getMe(): Promise<User> {
+  const response = await API.get("/me");
+  return response.data as User;
 }
 
 export async function register(email: string, password: string) {
   try {
     const response = await API.post("/users", { user: { email, password } });
-    const token = response.data.token;
-    if (token) localStorage.setItem("token", token);
+    // Registration sets auth cookie; /me is the source of truth.
+    if (response.status >= 200 && response.status < 300) return await getMe();
     return response.data as User;
   } catch (err: any) {
     // Extract validation errors from the API response
@@ -25,11 +25,11 @@ export async function register(email: string, password: string) {
 
 export async function login(email: string, password: string) {
   try {
-    const response = await API.post("/users/sign_in", {
+    const response = await API.post("/login", {
       user: { email, password },
     });
-    const token = response.headers.authorization?.split(" ")[1];
-    if (token) localStorage.setItem("token", token);
+    // Login sets auth cookie; /me is the source of truth.
+    if (response.status >= 200 && response.status < 300) return await getMe();
     return response.data as User;
   } catch (err: any) {
     // Extract validation errors from the API response
@@ -43,6 +43,5 @@ export async function login(email: string, password: string) {
 }
 
 export async function logout() {
-  await API.delete("/users/sign_out");
-  localStorage.removeItem("token");
+  await API.delete("/logout");
 }

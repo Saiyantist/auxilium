@@ -1,8 +1,8 @@
 class ApplicationController < ActionController::API
   include Pundit::Authorization
 
-  # Only authenticate if a JWT is present
-  before_action :authenticate_user!
+  # Require auth by default, but allow Devise controllers to be public.
+  before_action :authenticate_user!, unless: :devise_controller?
 
   # Rescue from unauthorized access
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
