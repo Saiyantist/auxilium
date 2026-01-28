@@ -19,6 +19,8 @@ export default function Register() {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
   const [errors, setErrors] = useState<string[]>([]); // Changed to array for multiple errors
   const [loading, setLoading] = useState(false);
 
@@ -28,30 +30,23 @@ export default function Register() {
     setLoading(true);
 
     try {
-      // Add your validation logic here, e.g., check password length, uppercase, etc.
-      // For demo: simulate errors or call register
-      const newUser = await register(email, password); // Placeholder
+      const newUser = await register(email, password, firstName, lastName);
       navigate(getDashboardRoute(newUser.role));
     } catch (err: any) {
-      console.error(err);
-      // Set multiple errors based on validation; example:
-      setErrors([
-        'Password is too short (minimum is 8 characters)',
-        'Password must contain at least one uppercase letter',
-        // Add more as needed
-      ]);
+      console.error(err.errors);
+      setErrors([...new Set(err.errors as string[])]);
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 py-12">
-      <Card className="w-full max-w-3xl overflow-hidden shadow-2xl border-0">
-        <div className="grid md:grid-cols-2">
+    <div className="min-h-screen w-full flex items-center justify-center">
+      <Card className="w-full sm:max-w-2xl lg:max-w-4xl min-h-[80vh] flex flex-col overflow-hidden shadow-2xl border-0">
+        <div className="flex flex-1 flex-col md:flex-row md:items-stretch">
 
           {/* LEFT PANEL */}
-          <div className="hidden md:flex flex-col justify-center bg-gradient-to-br from-purple-600 to-indigo-600 text-white p-10">
+          <div className="hidden md:flex md:w-2/5 flex-col justify-center bg-gradient-to-br from-purple-600 to-indigo-600 text-white p-10">
             <h2 className="text-3xl font-bold mb-4">
               Create your Auxilium account
             </h2>
@@ -61,7 +56,7 @@ export default function Register() {
           </div>
 
           {/* RIGHT PANEL */}
-          <div className="relative p-10 bg-white">
+          <div className="relative w-full md:w-3/5 px-10 py-6 bg-white flex flex-col justify-evenly">
             <Link
               to="/"
               className="absolute left-6 top-6 rounded-full p-2 hover:bg-gray-100 transition"
@@ -69,7 +64,7 @@ export default function Register() {
               <ChevronLeft size={20} />
             </Link>
 
-            <CardHeader className="px-0 pt-6 pb-8 space-y-2">
+            <CardHeader className="px-0 pt-10 space-y-2">
               <CardTitle className="text-3xl font-bold text-gray-900">
                 Register
               </CardTitle>
@@ -80,9 +75,28 @@ export default function Register() {
 
             <CardContent className="px-0">
               <form onSubmit={handleRegister} className="space-y-5">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <Input
+                    type="text"
+                    placeholder="First name"
+                    value={firstName}
+                    onChange={(e) => setFirstName(e.target.value)}
+                    required
+                    className="h-11 rounded-lg"
+                  />
+                  <Input
+                    type="text"
+                    placeholder="Last name"
+                    value={lastName}
+                    onChange={(e) => setLastName(e.target.value)}
+                    required
+                    className="h-11 rounded-lg"
+                  />
+                </div>
+
                 <Input
                   type="email"
-                  placeholder="you@example.com"
+                  placeholder="Enter your email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
@@ -91,7 +105,7 @@ export default function Register() {
 
                 <Input
                   type="password"
-                  placeholder="••••••••"
+                  placeholder="Enter your password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
@@ -100,7 +114,7 @@ export default function Register() {
 
                 {errors.length > 0 && (
                   <div className="rounded-lg border border-red-200 bg-red-50 px-4 py-4 text-sm text-red-600 space-y-2">
-                    <p className="font-medium">Errors ({errors.length})</p>
+                    {/* <p className="font-medium">Errors ({errors.length})</p> */}
                     <ul className="list-disc pl-5 space-y-1">
                       {errors.map((err, index) => (
                         <li key={index}>{err}</li>
@@ -119,7 +133,7 @@ export default function Register() {
               </form>
             </CardContent>
 
-            <CardFooter className="px-0 pt-6">
+            <CardFooter className="justify-center p-0">
               <p className="text-sm text-gray-600">
                 Already have an account?{' '}
                 <Link

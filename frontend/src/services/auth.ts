@@ -6,9 +6,16 @@ export async function getMe(): Promise<User> {
   return response.data as User;
 }
 
-export async function register(email: string, password: string) {
+export async function register(
+  email: string,
+  password: string,
+  first_name: string,
+  last_name: string
+) {
   try {
-    const response = await API.post("/users", { user: { email, password } });
+    const response = await API.post("/users", {
+      user: { email, password, first_name, last_name },
+    });
     // Registration sets auth cookie; /me is the source of truth.
     if (response.status >= 200 && response.status < 300) return await getMe();
     return response.data as User;
