@@ -12,8 +12,8 @@ Rails.application.routes.draw do
   devise_for :users,
     path: 'api/v1/users',
     controllers: {
-      sessions: 'users/sessions',
-      registrations: 'users/registrations'
+      sessions: 'api/v1/users/sessions',
+      registrations: 'api/v1/users/registrations'
     }
 
   # API routes
@@ -21,8 +21,11 @@ Rails.application.routes.draw do
     namespace :v1 do
       get '/healthz', to: proc { [200, {}, ['OK']] }
       get "/me", to: "me#show"
-      post "/login", to: "users/sessions#create"
-      delete "/logout", to: "users/sessions#destroy"
+      
+      devise_scope :user do
+        post "/login", to: "users/sessions#create"
+        delete "/logout", to: "users/sessions#destroy"
+      end
 
       # Setup Action Cable
       mount ActionCable.server => '/cable'

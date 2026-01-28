@@ -43,7 +43,6 @@ module Backend
 
     # JWT via HttpOnly cookies requires cookie parsing in API-only mode.
     config.middleware.use ActionDispatch::Cookies
-    config.middleware.insert_before Warden::JWTAuth::Middleware, Middleware::JwtCookie
 
     # Prevent ActionDispatch::Flash middleware (Devise sometimes calls flash messages)
     # config.middleware.delete ActionDispatch::Flash rescue nil
