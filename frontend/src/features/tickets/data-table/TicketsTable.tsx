@@ -32,6 +32,7 @@ export function TicketsTable({
   const isClient = user?.role === 'client';
   const columns = isClient ? clientTicketColumns : adminTicketColumns;
   const filterConfig = isClient ? clientTicketFilterConfig : ticketFilterConfig;
+  const sortedTickets = tickets.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()).slice(0, 5) || []
 
   if (!isLoading && tickets.length === 0) {
     return (
@@ -90,7 +91,7 @@ export function TicketsTable({
   return (
     <DataTable
       columns={columns}
-      data={tickets}
+      data={sortedTickets}
       searchKeys={isClient ? ticketSearchKeys : adminTicketSearchKeys}
       filterConfig={filterConfig}
       initialPageSize={5}

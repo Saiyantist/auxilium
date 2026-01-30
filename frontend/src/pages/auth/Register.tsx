@@ -74,54 +74,61 @@ export default function Register() {
             </CardHeader>
 
             <CardContent className="px-0">
-              <form onSubmit={handleRegister} className="space-y-5">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <form onSubmit={handleRegister} className='flex flex-col h-full gap-6'>
+
+                {/* Fields */}
+                <div className='space-y-5 justify-start'>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <Input
+                      type="text"
+                      placeholder="First name"
+                      value={firstName}
+                      onChange={(e) => setFirstName(e.target.value)}
+                      required
+                      className="h-11 rounded-lg"
+                    />
+                    <Input
+                      type="text"
+                      placeholder="Last name"
+                      value={lastName}
+                      onChange={(e) => setLastName(e.target.value)}
+                      required
+                      className="h-11 rounded-lg"
+                    />
+                  </div>
+
                   <Input
-                    type="text"
-                    placeholder="First name"
-                    value={firstName}
-                    onChange={(e) => setFirstName(e.target.value)}
+                    type="email"
+                    placeholder="Enter your email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     required
                     className="h-11 rounded-lg"
                   />
+
                   <Input
-                    type="text"
-                    placeholder="Last name"
-                    value={lastName}
-                    onChange={(e) => setLastName(e.target.value)}
+                    type="password"
+                    placeholder="Enter your password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                     required
                     className="h-11 rounded-lg"
                   />
                 </div>
 
-                <Input
-                  type="email"
-                  placeholder="Enter your email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                  className="h-11 rounded-lg"
-                />
+                {/* Error area */}
+                <div className="flex-none min-h-[96px]">
 
-                <Input
-                  type="password"
-                  placeholder="Enter your password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                  className="h-11 rounded-lg"
-                />
-
-                {errors.length > 0 && (
-                  <div className="rounded-lg border border-red-200 bg-red-50 px-4 py-4 text-sm text-red-600 space-y-2">
-                    {/* <p className="font-medium">Errors ({errors.length})</p> */}
-                    <ul className="list-disc pl-5 space-y-1">
-                      {errors.map((err, index) => (
-                        <li key={index}>{err}</li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
+                  {errors.length > 0 && (
+                    <div className="rounded-lg border border-red-200 bg-red-50 px-4 py-4 text-sm text-red-600 space-y-2">
+                      <ul className="list-disc pl-5 space-y-1">
+                        {errors.map((err, index) => (
+                          <li key={index}>{err}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
 
                 <Button
                   type="submit"
