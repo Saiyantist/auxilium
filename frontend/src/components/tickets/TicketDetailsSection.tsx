@@ -30,6 +30,7 @@ export default function TicketDetailsSection({
     setContent("")
   }
 
+  // Assignee details
   const firstName = ticket.assignee?.first_name ?? ""
   const lastName = ticket.assignee?.last_name ?? ""
   const fullName = `${firstName} ${lastName}`.trim() ?? "Unassigned"
@@ -52,7 +53,7 @@ export default function TicketDetailsSection({
         <div className="bg-white rounded-lg border p-4 shadow-sm">
           <h3 className="text-sm font-medium text-gray-600 mb-2">Due Date</h3>
           <p className="text-base font-medium">
-            {ticket.due_date ? new Date(ticket.due_date).toLocaleString() : "No due date"}
+            {ticket.due_date ? new Date(ticket.due_date).toLocaleDateString() : "No due date"}
           </p>
         </div>
       </div>
@@ -79,7 +80,7 @@ export default function TicketDetailsSection({
           {comments.isLoading && <p className="text-gray-500">Loading comments...</p>}
 
           {comments.data?.length === 0 && !comments.isLoading && (
-            <p className="text-gray-500 text-center py-4">No comments yet. Be the first to comment!</p>
+            <p className="text-gray-500 text-center py-4">No comments yet.</p>
           )}
 
           {comments.data?.map((c: Comment) => {

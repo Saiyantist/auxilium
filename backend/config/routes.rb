@@ -21,7 +21,8 @@ Rails.application.routes.draw do
     namespace :v1 do
       get '/healthz', to: proc { [200, {}, ['OK']] }
       get "/me", to: "me#show"
-      
+      get "users/clients", to: "users#clients"
+
       devise_scope :user do
         post "/login", to: "users/sessions#create"
         delete "/logout", to: "users/sessions#destroy"
