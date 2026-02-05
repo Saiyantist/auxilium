@@ -16,8 +16,18 @@ export const createTicket = async (payload: Partial<Ticket>) => {
   return data;
 };
 
-export const updateTicket = async (ticketId: number, payload: Partial<Ticket>) => {
-  const { data } = await api.put<Ticket>(`/tickets/${ticketId}`, payload);
+/** Payload for ticket update (only editable fields; backend filters by role). */
+export type TicketUpdatePayload = {
+  status?: string;
+  priority?: string;
+  severity?: string;
+  ticket_type?: string;
+  assignee_id?: number | null;
+  due_date?: string | null;
+};
+
+export const updateTicket = async (ticketId: number, payload: TicketUpdatePayload) => {
+  const { data } = await api.patch<Ticket>(`/tickets/${ticketId}`, { ticket: payload });
   return data;
 };
 

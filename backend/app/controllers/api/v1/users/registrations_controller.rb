@@ -2,6 +2,14 @@
 class Api::V1::Users::RegistrationsController < Devise::RegistrationsController
   respond_to :json
 
+  # POST /api/v1/users/registrations — sign up a user
+  #
+  # Builds a user resource based on the sign_up_params
+  # and saves it to the database. If the user is successfully
+  # created, set the access token cookie with the user's JWT
+  # token and render the user's information in JSON.
+  # If the user is not successfully created, render the validation
+  # errors in JSON with a status of 422 Unprocessable Entity.
   def create
     build_resource(sign_up_params)
 
@@ -30,6 +38,8 @@ class Api::V1::Users::RegistrationsController < Devise::RegistrationsController
 
   private
 
+  # Whitelist parameters for sign up action.
+  # This method is called in the create action to build the user resource.
   def sign_up_params
     params.require(:user).permit(
       :email,

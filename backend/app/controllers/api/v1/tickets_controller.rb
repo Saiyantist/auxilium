@@ -33,8 +33,24 @@ class Api::V1::TicketsController < ApplicationController
     def update
       authorize @ticket
 
-      if @ticket.update(ticket_params)
-        render json: @ticket
+      # Capture changes before update
+      changes = {}
+      ticket_params_for_update.each do |key, new_value|
+        old_value = @ticket.send(key)
+        changes[key] = { old: old_value, new: new_value } if old_value != new_value
+      end
+
+      if @ticket.update(ticket_params_for_update)
+        # Log the changes
+        if changes.any?
+          ActivityLogger.log(
+            user: current_user,
+            ticket: @ticket,
+            action: "ticket_updated",
+            metadata: { changes: changes }
+          )
+        end
+        render json: @ticket.as_json(tickets_includes)
       else
         render json: { errors: @ticket.errors.full_messages }, status: :unprocessable_entity
       end
@@ -57,6 +73,15 @@ class Api::V1::TicketsController < ApplicationController
         :subject, :description, :status, :priority, :ticket_type, :severity,
         :due_date, :creator_id, :assignee_id, :project_id, :category_id
       )
+    end
+
+    # Agents may not change assignee; only admins can.
+    def ticket_params_for_update
+      permitted = ticket_params.slice(
+        :status, :priority, :severity, :ticket_type, :due_date
+      )
+      permitted[:assignee_id] = ticket_params[:assignee_id] if current_user.admin?
+      permitted
     end
 
     # For create: creator and assignee are set in set_creator_and_assignee!, not from params

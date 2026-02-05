@@ -13,7 +13,7 @@ class ApplicationController < ActionController::API
   private
 
   # Allow devise-jwt to authenticate using an HttpOnly cookie.
-  # We copy the JWT into the Authorization header expected by warden-jwt_auth.
+  # Copied the JWT into the Authorization header expected by warden-jwt_auth.
   def set_authorization_from_jwt_cookie
     return if request.headers["Authorization"].present?
 

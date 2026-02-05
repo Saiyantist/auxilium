@@ -19,10 +19,11 @@ class Ticket < ApplicationRecord
   # Validations
   validates :subject, presence: true, length: { minimum: 3, maximum: 255 }
   validates :description, presence: true, length: { minimum: 10, maximum: 16_000 }
-  validates :status, presence: true
+  validates :status, presence: true, inclusion: { in: statuses.keys }
   validates :priority, presence: true, inclusion: { in: priorities.keys }
+  validates :severity, inclusion: { in: severities.keys }, allow_nil: false
   validates :ticket_type, inclusion: { in: ticket_types.keys }
-  validate :due_date_not_in_past, if: -> { due_date.present? }
+  validate :due_date_not_in_past, if: -> { due_date_changed? && due_date.present? }
 
   # Ticket numbering assigned after creation
   after_create :assign_ticket_number

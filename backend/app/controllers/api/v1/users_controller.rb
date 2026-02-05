@@ -7,6 +7,12 @@ class Api::V1::UsersController < ApplicationController
     render json: users.as_json(only: %i[id first_name last_name email])
   end
 
+  # GET /api/v1/users/assignables — active agents and admins (for ticket assignee dropdown)
+  def assignables
+    users = User.active.where(role: %i[admin agent]).order(:first_name, :last_name)
+    render json: users.as_json(only: %i[id first_name last_name email])
+  end
+
   private
 
   def ensure_agent_or_admin

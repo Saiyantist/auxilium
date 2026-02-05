@@ -22,6 +22,7 @@ Rails.application.routes.draw do
       get '/healthz', to: proc { [200, {}, ['OK']] }
       get "/me", to: "me#show"
       get "users/clients", to: "users#clients"
+      get "users/assignables", to: "users#assignables"
 
       devise_scope :user do
         post "/login", to: "users/sessions#create"
