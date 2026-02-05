@@ -41,6 +41,7 @@ export const useUpdateTicket = () => {
     onSuccess: (_data: Ticket, variables: { id: number; payload: TicketUpdatePayload }) => {
       qc.invalidateQueries({ queryKey: ['ticket', variables.id] });
       qc.invalidateQueries({ queryKey: ['tickets'] });
+      qc.invalidateQueries({ queryKey: ['ticketActivities', variables.id] });
     },
   });
 };
