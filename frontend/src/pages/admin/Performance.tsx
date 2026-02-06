@@ -6,7 +6,7 @@ import {
   TrendingDown,
   Clock,
   CheckCircle2,
-  Users,
+  // Users,
   Activity,
   Calendar,
   BarChart3,
@@ -26,8 +26,8 @@ export default function Performance() {
   // Calculate metrics based on active tickets
   const totalTickets = activeTickets.length;
   const resolvedTickets = activeTickets.filter(t => t.status === 'Closed').length; // Changed 'Resolved' to 'Closed' to match Status type
-  const inProgressTickets = activeTickets.filter(t => t.status === 'In Progress').length;
-  const pendingTickets = activeTickets.filter(t => t.status === 'Pending Approval' || t.status === 'On Hold').length; // Fixed 'Awaiting Approval' to 'Pending Approval'
+  // const inProgressTickets = activeTickets.filter(t => t.status === 'In Progress').length;
+  // const pendingTickets = activeTickets.filter(t => t.status === 'Pending Approval' || t.status === 'On Hold').length; // Fixed 'Awaiting Approval' to 'Pending Approval'
 
   // Mock performance data
   const performanceData = {
