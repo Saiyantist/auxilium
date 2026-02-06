@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -14,13 +14,28 @@ import {
 } from '@/components/ui/select';
 import { Card, CardContent, CardDescription, CardHeader } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { Calendar } from '@/components/ui/calendar';
+
+import { Calendar as CalendarIcon } from 'lucide-react';
 import { Loader2, AlertCircle } from 'lucide-react';
+
 import api from '@/services/api';
 import { useAuth } from '@/hooks/use-auth';
+import { toast } from '@/hooks/use-toast';
+import { format, addDays, startOfToday } from 'date-fns';
+
+interface ClientUser {
+  id: number;
+  first_name: string;
+  last_name: string;
+  email: string;
+}
 
 interface TicketFormData {
   subject: string;
   description: string;
+  creator_id?: number;
   priority?: string;
   status?: string;
   severity?: string;
@@ -36,9 +51,34 @@ export default function NewTicket() {
   const { user } = useAuth(); // Get current user with role
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [clients, setClients] = useState<ClientUser[]>([]);
+  const [clientsLoading, setClientsLoading] = useState(false);
 
   // Check if user is admin or agent
   const isAdminOrAgent = user?.role === 'admin' || user?.role === 'agent';
+
+  // Fetch active clients for "Create for Client" dropdown (agent/admin only)
+  useEffect(() => {
+    if (!isAdminOrAgent) return;
+    let cancelled = false;
+    setClientsLoading(true);
+
+    // Will be refactored into a service
+    api
+      .get<ClientUser[]>('/users/clients')
+      .then((res) => {
+        if (!cancelled) setClients(Array.isArray(res.data) ? res.data : []);
+      })
+      .catch(() => {
+        if (!cancelled) setClients([]);
+      })
+      .finally(() => {
+        if (!cancelled) setClientsLoading(false);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [isAdminOrAgent]);
 
   const {
     register,
@@ -51,6 +91,7 @@ export default function NewTicket() {
     defaultValues: {
       subject: '',
       description: '',
+      creator_id: undefined,
       priority: '',
       status: isAdminOrAgent ? 'open' : undefined,
       severity: '',
@@ -59,7 +100,9 @@ export default function NewTicket() {
     },
   });
 
+  const subject = watch('subject') || '';
   const description = watch('description') || '';
+  const creatorId = watch('creator_id');
   const priority = watch('priority');
   const status = watch('status');
   const severity = watch('severity');
@@ -67,55 +110,73 @@ export default function NewTicket() {
   const dueDate = watch('due_date');
 
   const onSubmit = async (data: TicketFormData) => {
+    if (isAdminOrAgent && data.creator_id == null) {
+      setErrorMessage('Create for Client is required.');
+      toast({
+        variant: 'destructive',
+        title: 'Validation',
+        description: 'Please select a client in "Create for Client".',
+      });
+      return;
+    }
+
     setIsSubmitting(true);
     setErrorMessage(null);
 
     try {
-      // Prepare payload with only required fields
-      const payload: any = {
+      // Build payload aligned with backend strong params (subject, description, priority, ticket_type required)
+      const payload: Record<string, unknown> = {
         ticket: {
-          subject: data.subject,
-          description: data.description,
+          subject: data.subject.trim(),
+          description: data.description.trim(),
+          // Backend requires priority and ticket_type; use defaults for regular users
+          priority: (data.priority || 'medium').toLowerCase(),
+          ticket_type: (data.ticket_type || 'issue').toLowerCase(),
         },
       };
 
-      // Add optional fields if present (for admins/agents)
+      const ticket = payload.ticket as Record<string, unknown>;
+
       if (isAdminOrAgent) {
-        if (data.priority) {
-          payload.ticket.priority = data.priority.toLowerCase();
-        }
-        if (data.status) {
-          payload.ticket.status = data.status.toLowerCase();
-        }
-        if (data.severity) {
-          payload.ticket.severity = data.severity.toLowerCase();
-        }
-        if (data.ticket_type) {
-          payload.ticket.ticket_type = data.ticket_type.toLowerCase();
-        }
+        if (data.creator_id != null) ticket.creator_id = data.creator_id;
+        if (data.status) ticket.status = data.status.toLowerCase();
+        if (data.severity) ticket.severity = data.severity.toLowerCase();
+        // due_date: send YYYY-MM-DD (Rails accepts ISO date/datetime)
         if (data.due_date) {
-          payload.ticket.due_date = data.due_date;
+          const dateStr =
+            typeof data.due_date === 'string' ? data.due_date.split('T')[0] : '';
+          if (dateStr) ticket.due_date = dateStr;
         }
       }
 
       const response = await api.post('/tickets', payload);
 
-      // Navigate to the created ticket's detail page
+      toast({
+        title: 'Ticket created',
+        description: 'Your support ticket has been submitted successfully.',
+      });
       navigate(`/tickets/${response.data.id}`);
-    } catch (error: any) {
-      console.error('Error creating ticket:', error);
+    } catch (error: unknown) {
+      const err = error as {
+        response?: { data?: { errors?: string[] }; status?: number };
+      };
+      console.error('Error creating ticket:', err);
 
-      // Handle validation errors from Rails
-      if (error.response?.data?.errors) {
-        const errors = error.response.data.errors;
-        setErrorMessage(
-          Array.isArray(errors) ? errors.join(', ') : 'Failed to create ticket'
-        );
-      } else {
-        setErrorMessage(
-          error.response?.data?.message || 'An error occurred while creating the ticket'
-        );
-      }
+      const messages = err.response?.data?.errors;
+      const message = Array.isArray(messages)
+        ? messages.join(' ')
+        : err.response?.data &&
+            typeof err.response.data === 'object' &&
+            'message' in err.response.data
+          ? String((err.response.data as { message?: string }).message)
+          : 'An error occurred while creating the ticket';
+
+      setErrorMessage(message);
+      toast({
+        variant: 'destructive',
+        title: 'Failed to create ticket',
+        description: message,
+      });
     } finally {
       setIsSubmitting(false);
     }
@@ -125,6 +186,7 @@ export default function NewTicket() {
     reset({
       subject: '',
       description: '',
+      creator_id: undefined,
       priority: '',
       status: isAdminOrAgent ? 'open' : undefined,
       severity: '',
@@ -133,6 +195,9 @@ export default function NewTicket() {
     });
     setErrorMessage(null);
   };
+
+  // Calculate the date 3 days from today
+  const threeDaysFromNow = addDays(startOfToday(), 3);
 
   return (
     <div className="min-h-screen p-4 md:p-8">
@@ -161,18 +226,26 @@ export default function NewTicket() {
               <Input
                 id="subject"
                 placeholder="Brief description of the issue"
+                maxLength={255}
                 {...register('subject', {
                   required: 'Subject is required',
                   minLength: {
                     value: 3,
                     message: 'Subject must be at least 3 characters',
                   },
+                  maxLength: {
+                    value: 255,
+                    message: 'Subject must be at most 255 characters',
+                  },
                 })}
                 disabled={isSubmitting}
               />
-              {errors.subject && (
-                <p className="text-sm text-red-500">{errors.subject.message}</p>
-              )}
+              <div className="flex justify-between items-center gap-2 flex-wrap">
+                {errors.subject && (
+                  <p className="text-sm text-red-500">{errors.subject.message}</p>
+                )}
+                <p className="text-xs text-gray-500 ml-auto">{subject.length} / 255</p>
+              </div>
             </div>
 
             {/* Description - Required */}
@@ -183,23 +256,28 @@ export default function NewTicket() {
               <Textarea
                 id="description"
                 placeholder="Provide detailed information about your issue or request..."
+                maxLength={16000}
                 {...register('description', {
                   required: 'Description is required',
                   minLength: {
                     value: 10,
                     message: 'Description must be at least 10 characters',
                   },
+                  maxLength: {
+                    value: 16000,
+                    message: 'Description must be at most 16,000 characters',
+                  },
                 })}
                 rows={6}
                 disabled={isSubmitting}
                 className="resize-none"
               />
-              <div className="flex justify-between items-center">
+              <div className="flex justify-between items-center gap-2 flex-wrap">
                 {errors.description && (
                   <p className="text-sm text-red-500">{errors.description.message}</p>
                 )}
                 <p className="text-xs text-gray-500 ml-auto">
-                  {description.length} characters
+                  {description.length} / 16,000 characters
                 </p>
               </div>
             </div>
@@ -207,8 +285,45 @@ export default function NewTicket() {
             {/* Admin/Agent Only Fields */}
             {isAdminOrAgent && (
               <>
-                {/* Row: Status and Ticket Type */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {/* Row: Create for Client, Status, and Ticket Type  */}
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                  {/* Create for Client: required when agent/admin creates on behalf of a client */}
+                  <div className="space-y-2">
+                    <Label htmlFor="creator_id">
+                      Create for Client<span className="text-red-500">*</span>
+                    </Label>
+                    <Select
+                      value={creatorId != null ? String(creatorId) : ''}
+                      onValueChange={(value) =>
+                        setValue('creator_id', value ? Number(value) : undefined)
+                      }
+                      disabled={isSubmitting || clientsLoading}
+                      required
+                      {...register('creator_id', {
+                        required: 'Create for Client is required.',
+                      })}
+                    >
+                      <SelectTrigger id="creator_id">
+                        <SelectValue
+                          placeholder={
+                            clientsLoading ? 'Loading clients...' : 'Select client'
+                          }
+                        />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {clients.map((c) => (
+                          <SelectItem key={c.id} value={String(c.id)}>
+                            {c.first_name} {c.last_name} ({c.email})
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    {errors.creator_id && (
+                      <p className="text-sm text-red-500">{errors.creator_id.message}</p>
+                    )}
+                  </div>
+
+                  {/* Status */}
                   <div className="space-y-2">
                     <Label htmlFor="status">Status</Label>
                     <Select
@@ -229,6 +344,7 @@ export default function NewTicket() {
                     </Select>
                   </div>
 
+                  {/* Ticket Type */}
                   <div className="space-y-2">
                     <Label htmlFor="ticket_type">Ticket Type</Label>
                     <Select
@@ -248,8 +364,9 @@ export default function NewTicket() {
                   </div>
                 </div>
 
-                {/* Row: Priority and Severity */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {/* Row: Priority, Severity, and Due Date */}
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                  {/* Priority */}
                   <div className="space-y-2">
                     <Label htmlFor="priority">Priority</Label>
                     <Select
@@ -269,6 +386,7 @@ export default function NewTicket() {
                     </Select>
                   </div>
 
+                  {/* Severity */}
                   <div className="space-y-2">
                     <Label htmlFor="severity">Severity</Label>
                     <Select
@@ -286,18 +404,41 @@ export default function NewTicket() {
                       </SelectContent>
                     </Select>
                   </div>
-                </div>
 
-                {/* Due Date */}
-                <div className="space-y-2">
-                  <Label htmlFor="due_date">Due Date</Label>
-                  <Input
-                    value={dueDate ? dueDate.toString().split('T')[0] : ''}
-                    id="due_date"
-                    type="date"
-                    {...register('due_date')}
-                    disabled={isSubmitting}
-                  />
+                  {/* Due Date - min today so backend "not in past" validation is satisfied */}
+                  <div className="space-y-2">
+                    <Label htmlFor="due_date">Due Date</Label>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <Button
+                          variant="outline"
+                          data-empty={!dueDate}
+                          className="data-[empty=true]:text-muted-foreground w-full justify-start text-left font-normal"
+                        >
+                          <CalendarIcon />
+                          {dueDate ? (
+                            format(new Date(dueDate), 'yyyy-MM-dd')
+                          ) : (
+                            <span>Pick a date</span>
+                          )}
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-full p-0 mt-2 rounded-lg shadow-lg max-w-[320px] z-10">
+                        <Calendar
+                          mode="single"
+                          selected={dueDate ? new Date(dueDate) : undefined}
+                          defaultMonth={dueDate ? new Date(dueDate) : threeDaysFromNow}
+                          disabled={(date) => date < threeDaysFromNow}
+                          onSelect={(date) => {
+                            setValue('due_date', date ? format(date, 'yyyy-MM-dd') : ''); // Format date as "yyyy-MM-dd"
+                          }}
+                        />
+                      </PopoverContent>
+                    </Popover>
+                    {errors.due_date && (
+                      <p className="text-sm text-red-500">{errors.due_date.message}</p>
+                    )}
+                  </div>
                 </div>
               </>
             )}

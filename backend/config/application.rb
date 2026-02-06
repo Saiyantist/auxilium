@@ -41,6 +41,9 @@ module Backend
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
 
+    # JWT via HttpOnly cookies requires cookie parsing in API-only mode.
+    config.middleware.use ActionDispatch::Cookies
+
     # Prevent ActionDispatch::Flash middleware (Devise sometimes calls flash messages)
     # config.middleware.delete ActionDispatch::Flash rescue nil
     # config.middleware.delete ActionDispatch::Cookies rescue nil

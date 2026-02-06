@@ -42,7 +42,7 @@ export default function Settings() {
   const handleSave = (section: string) => {
     // Simulate save (replace with API call)
     alert(`${section} settings saved!`);
-    console.log({ helpdeskName, timeZone, language, customPriorities, customStatuses, customCategories, users, emailNotifications, smsNotifications, notificationThreshold, apiKey, webhookUrl, theme });
+    // console.log({ helpdeskName, timeZone, language, customPriorities, customStatuses, customCategories, users, emailNotifications, smsNotifications, notificationThreshold, apiKey, webhookUrl, theme });
   };
 
   const addCustomItem = (type: 'priority' | 'status' | 'category', value: string) => {

@@ -4,7 +4,8 @@
 // import { Button } from "@/components/ui/button";
 // import { Card } from "@/components/ui/card";
 // import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import AppRouter from "@/routes/AppRouter";
+import AppRouter from '@/routes/AppRouter';
+import { Toaster } from '@/components/ui/toaster';
 
 function App() {
   // const [count, setCount] = useState(0)
@@ -62,7 +63,10 @@ function App() {
     //     </Card>
     //   </div>
     // </>
-    <AppRouter/>
+    <>
+      <AppRouter />
+      <Toaster />
+    </>
   );
 }
 

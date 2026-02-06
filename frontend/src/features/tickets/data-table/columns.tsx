@@ -20,7 +20,7 @@ const ticketColumns: DataTableColumn<Ticket>[] = [
     label: 'Ticket #',
     sortable: true,
     render: (_value, row) => (
-      <Link className='text-blue-600 underline' to={`/tickets/${row.id}`}>
+      <Link className="text-blue-600 underline" to={`/tickets/${row.id}`}>
         {row.number}
       </Link>
     ),
@@ -30,10 +30,7 @@ const ticketColumns: DataTableColumn<Ticket>[] = [
     label: 'Subject',
     sortable: false,
     render: (value) => (
-      <span
-        className='block max-w-[260px] truncate'
-        title={value ? String(value) : ''}
-      >
+      <span className="block max-w-[260px] truncate" title={value ? String(value) : ''}>
         {value}
       </span>
     ),
@@ -68,7 +65,8 @@ const ticketColumns: DataTableColumn<Ticket>[] = [
     key: 'due_date',
     label: 'Due Date',
     sortable: true,
-    render: (value) => new Date(value as string).toLocaleString(),
+    render: (value) =>
+      value ? new Date(value as string).toLocaleDateString('en-US') : 'No Due Date',
   },
   {
     key: 'status',
@@ -124,5 +122,5 @@ const ticketColumns: DataTableColumn<Ticket>[] = [
 export const adminTicketColumns = ticketColumns;
 
 export const clientTicketColumns = ticketColumns.filter(
-  (column) => !HIDDEN_FOR_CLIENT_COLUMNS.has(String(column.key))
+  (column) => !HIDDEN_FOR_CLIENT_COLUMNS.has(String(column.key)),
 );

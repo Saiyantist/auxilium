@@ -12,19 +12,19 @@ class Api::V1::TicketsController < ApplicationController
     end
 
     def create
-      @ticket = Ticket.new(ticket_params)
-      @ticket.creator = current_user
-  
+      @ticket = Ticket.new(ticket_params_for_create)
+      set_creator_and_assignee!
+
       authorize @ticket
-  
-      if @ticket.save
+
+      if @ticket.errors.empty? && @ticket.save
         ActivityLogger.log(
           user: current_user,
           ticket: @ticket,
           action: "ticket_created",
           metadata: { subject: @ticket.subject }
         )
-        render json: @ticket, status: :created
+        render json: @ticket.as_json(tickets_includes), status: :created
       else
         render json: { errors: @ticket.errors.full_messages }, status: :unprocessable_entity
       end
@@ -33,8 +33,24 @@ class Api::V1::TicketsController < ApplicationController
     def update
       authorize @ticket
 
-      if @ticket.update(ticket_params)
-        render json: @ticket
+      # Capture changes before update
+      changes = {}
+      ticket_params_for_update.each do |key, new_value|
+        old_value = @ticket.send(key)
+        changes[key] = { old: old_value, new: new_value } if old_value != new_value
+      end
+
+      if @ticket.update(ticket_params_for_update)
+        # Log the changes
+        if changes.any?
+          ActivityLogger.log(
+            user: current_user,
+            ticket: @ticket,
+            action: "ticket_updated",
+            metadata: { changes: changes }
+          )
+        end
+        render json: @ticket.as_json(tickets_includes)
       else
         render json: { errors: @ticket.errors.full_messages }, status: :unprocessable_entity
       end
@@ -53,7 +69,48 @@ class Api::V1::TicketsController < ApplicationController
     end
   
     def ticket_params
-      params.require(:ticket).permit(:subject, :description, :status, :priority, :assignee_id, :project_id, :category_id)
+      params.require(:ticket).permit(
+        :subject, :description, :status, :priority, :ticket_type, :severity,
+        :due_date, :creator_id, :assignee_id, :project_id, :category_id
+      )
+    end
+
+    # Agents may not change assignee; only admins can.
+    def ticket_params_for_update
+      permitted = ticket_params.slice(
+        :status, :priority, :severity, :ticket_type, :due_date
+      )
+      permitted[:assignee_id] = ticket_params[:assignee_id] if current_user.admin?
+      permitted
+    end
+
+    # For create: creator and assignee are set in set_creator_and_assignee!, not from params
+    def ticket_params_for_create
+      ticket_params.except(:assignee_id, :creator_id)
+    end
+
+    def set_creator_and_assignee!
+
+      # Normal Creation Logic
+      if current_user.client?
+        @ticket.creator = current_user
+        @ticket.assignee_id = nil
+
+      # Agent's/Admin's Ticket Creation Logic
+      elsif current_user.admin? || current_user.agent?
+        creator_id = ticket_params[:creator_id].presence
+        if creator_id.blank?
+          @ticket.errors.add(:base, "Create for Client is required")
+          return
+        end
+        creator = User.find_by(id: creator_id)
+        unless creator&.client? && creator&.active?
+          @ticket.errors.add(:creator_id, "must be an active client")
+          return
+        end
+        @ticket.creator = creator
+        @ticket.assignee = current_user
+      end
     end
 
     def tickets_includes

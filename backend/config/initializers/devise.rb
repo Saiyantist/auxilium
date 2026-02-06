@@ -317,12 +317,14 @@ Devise.setup do |config|
   
     # When to dispatch JWT (i.e., after login)
     jwt.dispatch_requests = [
-      ['POST', %r{^/users/sign_in$}]
+      ["POST", %r{^/api/v1/users/sign_in$}],
+      ["POST", %r{^/api/v1/login$}]
     ]
   
     # When to revoke JWT (i.e., logout)
     jwt.revocation_requests = [
-      ['DELETE', %r{^/users/sign_out$}]
+      ["DELETE", %r{^/api/v1/users/sign_out$}],
+      ["DELETE", %r{^/api/v1/logout$}]
     ]
   
     # Token expiration (optional)

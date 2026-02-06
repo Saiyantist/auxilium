@@ -8,6 +8,7 @@ import {
   getTicketActivities,
 } from '@/services/tickets';
 import type { Ticket } from '@/types';
+import type { TicketUpdatePayload } from '@/services/tickets';
 
 export const useTickets = () => {
   return useQuery({
@@ -35,11 +36,12 @@ export const useCreateTicket = () => {
 export const useUpdateTicket = () => {
   const qc = useQueryClient();
   return useMutation({
-    mutationFn: ({ id, payload }: { id: number; payload: any }) =>
+    mutationFn: ({ id, payload }: { id: number; payload: TicketUpdatePayload }) =>
       updateTicket(id, payload),
-    onSuccess: (_data: Ticket, variables: { id: number; payload: any }) => {
+    onSuccess: (_data: Ticket, variables: { id: number; payload: TicketUpdatePayload }) => {
       qc.invalidateQueries({ queryKey: ['ticket', variables.id] });
       qc.invalidateQueries({ queryKey: ['tickets'] });
+      qc.invalidateQueries({ queryKey: ['ticketActivities', variables.id] });
     },
   });
 };

@@ -11,13 +11,13 @@ interface ProtectedRouteProps {
  * Redirects to the user's appropriate dashboard if they don't have access.
  */
 export default function ProtectedRoute({ allowedRoles }: ProtectedRouteProps) {
-  const { token, user, loading } = useAuth();
+  const { user, loading } = useAuth();
   const location = useLocation();
 
   if (loading) return <div>Loading...</div>;
 
   // If not authenticated, redirect to login
-  if (!token) {
+  if (!user) {
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 

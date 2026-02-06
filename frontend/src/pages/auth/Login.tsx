@@ -39,12 +39,12 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 py-12">
-      <Card className="w-full max-w-3xl overflow-hidden shadow-2xl border-0">
-        <div className="grid md:grid-cols-2">
+    <div className="min-h-screen w-full flex items-center justify-center">
+      <Card className="w-full sm:max-w-2xl lg:max-w-4xl overflow-hidden shadow-2xl border-0">
+        <div className="flex flex-col md:flex-row">
 
           {/* LEFT PANEL */}
-          <div className="hidden md:flex flex-col justify-center bg-gradient-to-br from-purple-600 to-indigo-600 text-white p-10">
+          <div className="hidden md:flex md:w-2/5 flex-col justify-center bg-gradient-to-br from-purple-600 to-indigo-600 text-white p-10">
             <h2 className="text-3xl font-bold mb-4">
               Welcome to Auxilium
             </h2>
@@ -55,7 +55,7 @@ export default function Login() {
           </div>
 
           {/* RIGHT PANEL */}
-          <div className="relative p-10 bg-white">
+          <div className="relative w-full md:w-3/5 p-10 bg-white">
             <Link
               to="/"
               className="absolute left-6 top-6 rounded-full p-2 hover:bg-gray-100 transition"
@@ -108,7 +108,7 @@ export default function Login() {
               </form>
             </CardContent>
 
-            <CardFooter className="px-0 pt-6">
+            <CardFooter className="justify-center px-0">
               <p className="text-sm text-gray-600">
                 Don’t have an account?{' '}
                 <Link

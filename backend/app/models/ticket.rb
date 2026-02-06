@@ -17,14 +17,24 @@ class Ticket < ApplicationRecord
   has_many_attached :files
 
   # Validations
-  validates :subject, presence: true
-  validates :status, presence: true
-  validates :priority, presence: true
+  validates :subject, presence: true, length: { minimum: 3, maximum: 255 }
+  validates :description, presence: true, length: { minimum: 10, maximum: 16_000 }
+  validates :status, presence: true, inclusion: { in: statuses.keys }
+  validates :priority, presence: true, inclusion: { in: priorities.keys }
+  validates :severity, inclusion: { in: severities.keys }, allow_nil: false
+  validates :ticket_type, inclusion: { in: ticket_types.keys }
+  validate :due_date_not_in_past, if: -> { due_date_changed? && due_date.present? }
 
   # Ticket numbering assigned after creation
   after_create :assign_ticket_number
 
   private
+
+  def due_date_not_in_past
+    return unless due_date.respond_to?(:past?) && due_date.past?
+
+    errors.add(:due_date, "cannot be in the past")
+  end
 
   def assign_ticket_number
     # "T-00001" or "PROJECTKEY-00001"
