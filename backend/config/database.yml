@@ -17,8 +17,6 @@ default: &default
   password: <%= ENV.fetch("DB_PASSWORD", "") %>
   host: <%= ENV.fetch("DB_HOST", "localhost") %>
   port: <%= ENV.fetch("DB_PORT", 3306) %>
-  ssl_mode: VERIFY_IDENTITY
-  sslca: <%= Rails.root.join("config", "ca.pem") %>
 
 development:
   <<: *default
@@ -54,3 +52,5 @@ test:
 production:
   <<: *default
   database: <%= ENV["DB_NAME"] %>
+  ssl_mode: VERIFY_IDENTITY
+  sslca: <%= Rails.root.join("config", "ca.pem") %>
