@@ -49,6 +49,13 @@ const TICKET_TYPE_OPTIONS = [
   { value: 'task', label: 'Task' },
 ];
 
+/**
+ * Normalize an enum value to a lowercase string.
+ * If the value is undefined, null, or a valid number, it will be normalized to a lowercase string.
+ * If the value is not a valid number, it will be returned as is.
+ * If the value is a valid number, it will be used to index into the corresponding enum map.
+ * If the value is out of range for the enum map, it will be returned as an empty string.
+ */
 function normalizeEnum(value: string | number | undefined): string {
   if (value === undefined || value === null) return '';
   if (typeof value === 'string') return value.toLowerCase();
@@ -105,6 +112,7 @@ export default function TicketDetailsSection({
             ? value
             : format(new Date(value as number), 'yyyy-MM-dd');
       const d = dateStr ? new Date(dateStr) : null;
+      
       if (d && isBefore(d, startOfDay(new Date()))) {
         toast({
           variant: 'destructive',
