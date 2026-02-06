@@ -223,27 +223,23 @@ def calculate_due_date(priority, status, created_time, closed_at)
   priority_key = priority.to_sym
   range = sla_hours[priority_key] || (96..168)
   range_min, range_max = range.minmax
-  base_due_date = created_time + rand(range_min..range_max).hours
-  base_due_date = [base_due_date, created_time + 6.hours].max
 
+  # Always ensure due date is in the future (required by validation)
   case status
   when :open
-    min_future = Time.current + rand(12..72).hours
-    base_due_date = [base_due_date, min_future].max
+    base_due_date = Time.current + rand((range_min + 12)..(range_max + 48)).hours
   when :pending
-    min_future = Time.current + rand(6..48).hours
-    base_due_date = [base_due_date, min_future].max
+    base_due_date = Time.current + rand((range_min - 6)..(range_max - 12)).hours
   when :on_hold
-    base_due_date += rand(48..96).hours
+    base_due_date = Time.current + rand((range_min + 24)..(range_max + 72)).hours
   when :resolved, :closed
-    # Keep due date near resolution and avoid slipping far past closure
-    if closed_at
-      base_due_date = [base_due_date, closed_at - rand(6..24).hours].min
-      base_due_date = [base_due_date, created_time + 6.hours].max
-    end
+    base_due_date = Time.current + rand(range_min..(range_max + 24)).hours
+  else
+    base_due_date = Time.current + rand(range_min..range_max).hours
   end
 
-  base_due_date
+  # Ensure at minimum 1 hour in the future
+  [base_due_date, Time.current + 1.hour].max
 end
 
 ticket_templates.each_with_index do |template, index|

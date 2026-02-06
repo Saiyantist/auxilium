@@ -16,10 +16,13 @@ default: &default
   username: <%= ENV.fetch("DB_USERNAME", "root") %>
   password: <%= ENV.fetch("DB_PASSWORD", "") %>
   host: <%= ENV.fetch("DB_HOST", "localhost") %>
+  port: <%= ENV.fetch("DB_PORT", 3306) %>
+  ssl_mode: VERIFY_IDENTITY
+  sslca: <%= Rails.root.join("config", "ca.pem") %>
 
 development:
   <<: *default
-  database: <%= ENV.fetch("DB_NAME", "auxilium_development") %>
+  database: auxilium_development
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -50,6 +53,4 @@ test:
 #
 production:
   <<: *default
-  database: auxilium_production
-  username: auxilium
-  password: <%= ENV["AUXILIUM_DATABASE_PASSWORD"] %>
+  database: <%= ENV["DB_NAME"] %>
